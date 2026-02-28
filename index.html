@@ -253,7 +253,7 @@
       text-transform: uppercase;
     }
 
-    /* TICKER — seamless infinite scroll, visible in hero */
+    /* TICKER — like React scroll: two identical divs, -50% loop */
     .ticker {
       background: var(--accent);
       padding: 0.6rem 0;
@@ -268,15 +268,21 @@
     .ticker-inner {
       display: flex;
       width: max-content;
-      animation: tick 30s linear infinite;
-      will-change: transform;
+      animation: tick 40s linear infinite;
     }
 
-    .ticker-track {
+    .ticker-inner .ticker-track {
       display: flex;
+      align-items: center;
       gap: 4rem;
       flex-shrink: 0;
       padding: 0 2rem;
+    }
+    .ticker-inner .ticker-track:first-child {
+      padding-right: 0;
+    }
+    .ticker-inner .ticker-track:last-child {
+      padding-left: 0;
     }
 
     .ticker-item {
@@ -284,7 +290,7 @@
       font-size: 1.1rem;
       letter-spacing: 2px;
       color: #fff;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 1rem;
       flex-shrink: 0;
@@ -296,10 +302,10 @@
       font-size: 0.6rem;
     }
 
-    /* Keyframes set by script for exact pixel loop */
+    /* 3 kópie = na širokej obrazovke vždy 3× prvky, žiadna prázdna plocha */
     @keyframes tick {
-      0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-50%, 0, 0); }
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-33.333%); }
     }
 
     /* CONTAINER — centers content on wide/4K displays */
@@ -800,10 +806,18 @@
         <div class="stat-label">K dispozici</div>
       </div>
     </div>
-    <!-- TICKER — visible at bottom of first screen, infinite scroll -->
+    <!-- TICKER — 3 kópie, na dlhej obrazovke vždy 3× prvky bez prázdneho miesta -->
     <div class="ticker">
       <div class="ticker-inner">
         <div class="ticker-track">
+          <span class="ticker-item">Přeprava zboží</span>
+          <span class="ticker-item">Stěhování</span>
+          <span class="ticker-item">Mezinárodní doprava</span>
+          <span class="ticker-item">Expresní doručení</span>
+          <span class="ticker-item">Kurýrní služby</span>
+          <span class="ticker-item">Nadrozměrné zásilky</span>
+        </div>
+        <div class="ticker-track" aria-hidden="true">
           <span class="ticker-item">Přeprava zboží</span>
           <span class="ticker-item">Stěhování</span>
           <span class="ticker-item">Mezinárodní doprava</span>
@@ -1029,22 +1043,6 @@
     </div>
   </footer>
 
-  <script>
-    (function () {
-      window.addEventListener('load', function () {
-        var track = document.querySelector('.ticker-track');
-        if (!track) return;
-        var trackWidth = track.offsetWidth;
-        if (trackWidth <= 0) return;
-        var existing = document.getElementById('ticker-keyframes');
-        if (existing) existing.remove();
-        var style = document.createElement('style');
-        style.id = 'ticker-keyframes';
-        style.textContent = '@keyframes tick{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-' + trackWidth + 'px,0,0)}}';
-        document.head.appendChild(style);
-      });
-    })();
-  </script>
 </body>
 
 </html>
