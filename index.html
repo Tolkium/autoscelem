@@ -115,6 +115,7 @@
 
     /* HERO */
     #hero {
+      position: relative;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -252,19 +253,30 @@
       text-transform: uppercase;
     }
 
-    /* TICKER */
+    /* TICKER — seamless infinite scroll, visible in hero */
     .ticker {
       background: var(--accent);
       padding: 0.6rem 0;
       overflow: hidden;
-      position: relative;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
     }
 
     .ticker-inner {
       display: flex;
+      width: max-content;
+      animation: tick 30s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-track {
+      display: flex;
       gap: 4rem;
-      animation: tick 20s linear infinite;
-      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 0 2rem;
     }
 
     .ticker-item {
@@ -275,6 +287,8 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .ticker-item::before {
@@ -282,14 +296,10 @@
       font-size: 0.6rem;
     }
 
+    /* Keyframes set by script for exact pixel loop */
     @keyframes tick {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(-50%);
-      }
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
     }
 
     /* CONTAINER — centers content on wide/4K displays */
@@ -790,25 +800,28 @@
         <div class="stat-label">K dispozici</div>
       </div>
     </div>
-  </section>
-
-  <!-- TICKER -->
-  <div class="ticker">
-    <div class="ticker-inner">
-      <span class="ticker-item">Přeprava zboží</span>
-      <span class="ticker-item">Stěhování</span>
-      <span class="ticker-item">Mezinárodní doprava</span>
-      <span class="ticker-item">Expresní doručení</span>
-      <span class="ticker-item">Kurýrní služby</span>
-      <span class="ticker-item">Nadrozměrné zásilky</span>
-      <span class="ticker-item">Přeprava zboží</span>
-      <span class="ticker-item">Stěhování</span>
-      <span class="ticker-item">Mezinárodní doprava</span>
-      <span class="ticker-item">Expresní doručení</span>
-      <span class="ticker-item">Kurýrní služby</span>
-      <span class="ticker-item">Nadrozměrné zásilky</span>
+    <!-- TICKER — visible at bottom of first screen, infinite scroll -->
+    <div class="ticker">
+      <div class="ticker-inner">
+        <div class="ticker-track">
+          <span class="ticker-item">Přeprava zboží</span>
+          <span class="ticker-item">Stěhování</span>
+          <span class="ticker-item">Mezinárodní doprava</span>
+          <span class="ticker-item">Expresní doručení</span>
+          <span class="ticker-item">Kurýrní služby</span>
+          <span class="ticker-item">Nadrozměrné zásilky</span>
+        </div>
+        <div class="ticker-track" aria-hidden="true">
+          <span class="ticker-item">Přeprava zboží</span>
+          <span class="ticker-item">Stěhování</span>
+          <span class="ticker-item">Mezinárodní doprava</span>
+          <span class="ticker-item">Expresní doručení</span>
+          <span class="ticker-item">Kurýrní služby</span>
+          <span class="ticker-item">Nadrozměrné zásilky</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- SERVICES -->
   <section id="sluzby">
@@ -1016,6 +1029,22 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      window.addEventListener('load', function () {
+        var track = document.querySelector('.ticker-track');
+        if (!track) return;
+        var trackWidth = track.offsetWidth;
+        if (trackWidth <= 0) return;
+        var existing = document.getElementById('ticker-keyframes');
+        if (existing) existing.remove();
+        var style = document.createElement('style');
+        style.id = 'ticker-keyframes';
+        style.textContent = '@keyframes tick{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-' + trackWidth + 'px,0,0)}}';
+        document.head.appendChild(style);
+      });
+    })();
+  </script>
 </body>
 
 </html>
