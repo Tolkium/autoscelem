@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoSCELEM – Design D4</title>
+  <meta http-equiv="refresh" content="0; url=D4.html">
+  <script>
+    window.location.replace('D4.html');
+  </script>
+</head>
+<body>
+  <p>Přesměrovávám na verzi D4… <a href="D4.html">Pokračovat</a></p>
+</body>
+</html>
