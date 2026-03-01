@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="sk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoSCELEM — Autodoprava Vladimír Jerie</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* ─── THEME VARIABLES ─── */
+[data-theme="light"]{
+  --bg:#f8f7f4;
+  --bg2:#f0ede8;
+  --bg3:#e8e4dd;
+  --surface:#ffffff;
+  --border:#e0dbd3;
+  --border-strong:#c8c2b8;
+  --text:#1a1915;
+  --text2:#4a4742;
+  --text3:#8a847c;
+  --accent:#2c2c2c;
+  --accent-warm:#9b7f5c;
+  --accent-warm-light:rgba(155,127,92,.1);
+  --nav-bg:rgba(248,247,244,.88);
+  --card-shadow:0 2px 20px rgba(0,0,0,.07);
+  --card-shadow-hover:0 8px 40px rgba(0,0,0,.13);
+  --img-overlay:rgba(248,247,244,.08);
+  --toggle-bg:#e0dbd3;
+  --toggle-knob:#1a1915;
+}
+[data-theme="dark"]{
+  --bg:#0f0f0e;
+  --bg2:#161614;
+  --bg3:#1e1e1b;
+  --surface:#1a1a17;
+  --border:#2e2e2a;
+  --border-strong:#3e3e39;
+  --text:#f0ede8;
+  --text2:#b8b4ad;
+  --text3:#6e6a62;
+  --accent:#f0ede8;
+  --accent-warm:#c9a47a;
+  --accent-warm-light:rgba(201,164,122,.08);
+  --nav-bg:rgba(15,15,14,.88);
+  --card-shadow:0 2px 20px rgba(0,0,0,.3);
+  --card-shadow-hover:0 8px 40px rgba(0,0,0,.5);
+  --img-overlay:rgba(15,15,14,.15);
+  --toggle-bg:#2e2e2a;
+  --toggle-knob:#f0ede8;
+}
+
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Manrope',sans-serif;
+  overflow-x:hidden;
+  transition:background .35s ease, color .35s ease;
+}
+
+/* ─── WRAP ─── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 56px;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:var(--nav-bg);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid var(--border);
+  height:66px;
+  transition:background .35s ease, border-color .35s ease;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 56px;
+  height:100%;display:flex;align-items:center;justify-content:space-between;gap:32px;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:19px;font-weight:700;
+  color:var(--text);letter-spacing:.5px;
+  text-decoration:none;flex-shrink:0;
+  transition:color .35s;
+}
+.nav-logo span{color:var(--accent-warm);}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links a{
+  font-size:12px;font-weight:500;letter-spacing:.3px;
+  color:var(--text3);text-decoration:none;
+  padding:7px 14px;border-radius:8px;
+  transition:all .2s;
+}
+.nav-links a:hover{color:var(--text);background:var(--border);}
+
+/* THEME TOGGLE */
+.theme-toggle{
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;padding:6px 12px;border-radius:100px;
+  border:1px solid var(--border);
+  background:var(--toggle-bg);
+  transition:all .3s;
+  flex-shrink:0;
+}
+.theme-toggle:hover{border-color:var(--border-strong);}
+.toggle-track{
+  width:36px;height:20px;
+  border-radius:100px;
+  background:var(--border-strong);
+  position:relative;
+  transition:background .35s;
+  flex-shrink:0;
+}
+[data-theme="dark"] .toggle-track{background:var(--accent-warm);}
+.toggle-knob{
+  position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--surface);
+  transition:transform .35s cubic-bezier(.4,0,.2,1), background .35s;
+  box-shadow:0 1px 4px rgba(0,0,0,.25);
+}
+[data-theme="dark"] .toggle-knob{transform:translateX(16px);}
+.toggle-label{
+  font-size:11px;font-weight:600;letter-spacing:.5px;
+  color:var(--text3);text-transform:uppercase;
+  transition:color .35s;
+  white-space:nowrap;
+}
+
+/* ─── HERO — full bleed ─── */
+#hero{
+  min-height:100vh;
+  padding-top:66px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  position:relative;
+  overflow:hidden;
+}
+.hero-left{
+  background:var(--bg);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:100px 7% 100px 8%;
+  position:relative;
+  transition:background .35s;
+}
+.hero-left::after{
+  content:'';
+  position:absolute;right:0;top:10%;bottom:10%;
+  width:1px;background:var(--border);
+  transition:background .35s;
+}
+.hero-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent-warm);margin-bottom:32px;
+}
+.hero-label::before{
+  content:'';width:28px;height:1px;background:var(--accent-warm);display:block;
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,5.5vw,82px);
+  font-weight:700;line-height:1.08;
+  color:var(--text);margin-bottom:12px;
+  transition:color .35s;
+}
+h1 em{
+  font-style:italic;font-weight:400;
+  color:var(--accent-warm);
+}
+.hero-dash{
+  width:56px;height:3px;background:var(--accent-warm);
+  margin:28px 0;border-radius:2px;
+}
+.hero-sub{
+  font-size:15px;line-height:1.85;font-weight:400;
+  color:var(--text2);max-width:420px;margin-bottom:52px;
+  transition:color .35s;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn-solid{
+  display:inline-block;
+  background:var(--text);color:var(--bg);
+  font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:.4px;padding:14px 36px;border-radius:10px;
+  text-decoration:none;transition:all .25s;
+  box-shadow:var(--card-shadow);
+}
+.btn-solid:hover{transform:translateY(-2px);box-shadow:var(--card-shadow-hover);opacity:.9;}
+.btn-outline{
+  display:inline-block;
+  border:1.5px solid var(--border-strong);color:var(--text2);
+  font-size:13px;font-weight:500;letter-spacing:.3px;
+  padding:13px 32px;border-radius:10px;text-decoration:none;
+  transition:all .25s;
+}
+.btn-outline:hover{border-color:var(--text);color:var(--text);}
+
+.hero-right{
+  position:relative;overflow:hidden;
+  background:var(--bg2);
+  transition:background .35s;
+}
+.hero-right img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  opacity:.75;
+  transition:opacity .35s;
+}
+[data-theme="dark"] .hero-right img{opacity:.55;}
+.hero-right::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to right, var(--bg) 0%, transparent 15%),
+             linear-gradient(to top, var(--bg) 0%, transparent 20%);
+  transition:background .35s;
+}
+.hero-badge{
+  position:absolute;bottom:40px;right:40px;z-index:2;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:16px 22px;
+  box-shadow:var(--card-shadow);
+  transition:all .35s;
+}
+.hb-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.hb-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent-warm);}
+
+/* ─── STATS ─── */
+.stats-strip{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  transition:all .35s;
+}
+.stats-inner{
+  max-width:1200px;margin:0 auto;padding:0 56px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.sg{
+  padding:40px 24px;text-align:center;
+  border-right:1px solid var(--border);
+  transition:background .2s;
+}
+.sg:last-child{border-right:none;}
+.sg:hover{background:var(--bg3);}
+.sg-n{
+  font-family:'Playfair Display',serif;
+  font-size:40px;font-weight:700;
+  color:var(--accent-warm);display:block;margin-bottom:6px;
+}
+.sg-l{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+
+/* ─── SECTIONS COMMON ─── */
+.section-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent-warm);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-eyebrow::before{content:'';width:20px;height:1px;background:var(--accent-warm);}
+.section-heading{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,3.5vw,50px);font-weight:700;
+  color:var(--text);line-height:1.15;
+  transition:color .35s;
+}
+.section-heading em{font-style:italic;font-weight:400;color:var(--accent-warm);}
+
+/* ─── SERVICES ─── */
+#services{padding:110px 0;background:var(--bg);transition:background .35s;}
+.services-layout{margin-top:64px;}
+.svc-item{
+  display:grid;grid-template-columns:64px 1fr 40px;gap:0;
+  align-items:center;
+  padding:32px 0;
+  border-bottom:1px solid var(--border);
+  cursor:default;
+  transition:all .25s;
+  position:relative;
+}
+.svc-item::before{
+  content:'';position:absolute;left:0;right:0;top:0;bottom:0;
+  background:var(--accent-warm-light);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+  border-radius:8px;
+}
+.svc-item:hover::before{transform:scaleX(1);}
+.svc-item:hover{padding-left:16px;padding-right:16px;}
+.svc-index{
+  font-size:11px;font-weight:600;letter-spacing:1px;
+  color:var(--text3);font-family:'Playfair Display',serif;font-style:italic;
+}
+.svc-content{position:relative;}
+.svc-name{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:600;
+  color:var(--text);margin-bottom:6px;transition:color .35s;
+}
+.svc-desc{font-size:13px;color:var(--text3);line-height:1.7;max-width:560px;}
+.svc-arrow{
+  color:var(--accent-warm);font-size:20px;
+  opacity:0;transition:all .25s;
+  position:relative;
+}
+.svc-item:hover .svc-arrow{opacity:1;transform:translateX(4px);}
+
+/* ─── GALLERY ─── */
+#gallery{padding:100px 0;background:var(--bg2);transition:background .35s;}
+.gallery-grid{
+  margin-top:52px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  grid-template-rows:260px 260px;
+  gap:12px;
+}
+.gal-card{
+  border-radius:16px;overflow:hidden;
+  position:relative;
+  background:var(--bg3);
+}
+.gal-card:first-child{grid-row:span 2;}
+.gal-card img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s ease, filter .4s;
+  filter:saturate(.8);
+}
+[data-theme="dark"] .gal-card img{filter:saturate(.6) brightness(.8);}
+.gal-card:hover img{transform:scale(1.05);filter:saturate(1.1);}
+[data-theme="dark"] .gal-card:hover img{filter:saturate(.9) brightness(.9);}
+.gal-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:32px 22px 20px;
+  background:linear-gradient(transparent, rgba(0,0,0,.55));
+  transform:translateY(100%);transition:transform .35s;
+}
+.gal-card:hover .gal-info{transform:translateY(0);}
+.gal-info span{
+  font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:#fff;
+}
+
+/* ─── ABOUT ─── */
+#about{
+  padding:110px 0;
+  background:var(--bg3);
+  transition:background .35s;
+}
+.about-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;
+}
+.about-img-wrap{
+  position:relative;
+  height:520px;
+  border-radius:20px;overflow:hidden;
+}
+.about-img-wrap img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.85);transition:filter .35s;
+}
+[data-theme="dark"] .about-img-wrap img{filter:saturate(.6) brightness(.75);}
+.about-img-wrap::before{
+  content:'';
+  position:absolute;top:-16px;left:-16px;
+  width:120px;height:120px;
+  border-top:3px solid var(--accent-warm);
+  border-left:3px solid var(--accent-warm);
+  border-radius:4px 0 0 0;
+  transition:border-color .35s;
+  z-index:1;
+}
+.about-img-wrap::after{
+  content:'';
+  position:absolute;bottom:-16px;right:-16px;
+  width:120px;height:120px;
+  border-bottom:3px solid var(--accent-warm);
+  border-right:3px solid var(--accent-warm);
+  border-radius:0 0 4px 0;
+  transition:border-color .35s;
+  z-index:1;
+}
+.about-text .section-heading{margin-top:12px;margin-bottom:28px;}
+.about-body{font-size:14px;line-height:1.9;color:var(--text2);margin-bottom:20px;transition:color .35s;}
+.about-quote{
+  border-left:3px solid var(--accent-warm);
+  padding-left:24px;margin:36px 0;
+  transition:border-color .35s;
+}
+.about-quote p{
+  font-family:'Playfair Display',serif;font-size:18px;font-style:italic;font-weight:400;
+  color:var(--text);line-height:1.6;transition:color .35s;
+}
+.contact-cta{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:14px 24px;
+  text-decoration:none;transition:all .25s;
+  box-shadow:var(--card-shadow);
+}
+.contact-cta:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:var(--border-strong);}
+.cta-num{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--accent-warm);}
+.cta-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+.cta-icon{font-size:18px;}
+
+/* ─── CONTACT ─── */
+#contact{padding:100px 0;background:var(--bg);transition:background .35s;}
+.contact-layout{
+  margin-top:56px;
+  display:grid;grid-template-columns:1fr 1.6fr;gap:80px;
+}
+.contact-info{display:flex;flex-direction:column;gap:0;}
+.ci-row{
+  padding:24px 0;border-bottom:1px solid var(--border);
+  transition:border-color .35s;
+}
+.ci-row:first-child{border-top:1px solid var(--border);}
+.ci-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent-warm);margin-bottom:8px;}
+.ci-val{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--text);transition:color .35s;}
+.ci-val a{color:var(--text);text-decoration:none;transition:color .2s;}
+.ci-val a:hover{color:var(--accent-warm);}
+
+.contact-form{display:flex;flex-direction:column;gap:20px;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.fg{display:flex;flex-direction:column;gap:8px;}
+.fg label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+.fg input,.fg textarea,.fg select{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  font-family:'Manrope',sans-serif;font-size:14px;font-weight:400;
+  padding:13px 16px;outline:none;
+  transition:all .25s;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text3);}
+.fg input:focus,.fg textarea:focus,.fg select:focus{
+  border-color:var(--accent-warm);
+  box-shadow:0 0 0 3px var(--accent-warm-light);
+}
+.fg textarea{resize:vertical;min-height:110px;}
+.fg select{cursor:pointer;}
+.fg select option{background:var(--bg);color:var(--text);}
+.form-submit{
+  background:var(--text);color:var(--bg);
+  font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:.4px;padding:15px 40px;
+  border:none;border-radius:10px;cursor:pointer;
+  transition:all .25s;align-self:flex-start;
+  box-shadow:var(--card-shadow);
+}
+.form-submit:hover{transform:translateY(-2px);box-shadow:var(--card-shadow-hover);opacity:.88;}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:28px 0;
+  transition:all .35s;
+}
+.footer-inner{
+  max-width:1200px;margin:0 auto;padding:0 56px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.f-logo{
+  font-family:'Playfair Display',serif;font-size:17px;font-weight:700;
+  color:var(--text);transition:color .35s;
+}
+.f-logo span{color:var(--accent-warm);}
+.f-copy{font-size:12px;color:var(--text3);}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .wrap,.nav-inner,.stats-inner,.footer-inner{padding:0 36px;}
+}
+@media(max-width:860px){
+  #hero,.about-inner,.contact-layout{grid-template-columns:1fr;}
+  .hero-left{padding:80px 36px;}
+  .hero-right{height:360px;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gal-card:first-child{grid-row:auto;grid-column:span 2;}
+  .about-img-wrap{height:300px;}
+  .about-inner{gap:48px;}
+  .contact-layout{gap:48px;}
+  .form-row-2{grid-template-columns:1fr;}
+  .nav-links{gap:2px;}
+  .nav-links a{padding:7px 10px;}
+  .svc-item{grid-template-columns:48px 1fr 32px;}
+}
+@media(max-width:600px){
+  .nav-inner{padding:0 20px;}
+  .toggle-label{display:none;}
+  .hero-left{padding:60px 20px;}
+  .wrap{padding:0 20px;}
+  .stats-inner{padding:0 20px;}
+  .footer-inner{padding:0 20px;}
+  .gallery-grid{grid-template-columns:1fr;}
+  .gal-card:first-child{grid-column:auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Auto<span>SCELEM</span></a>
+    <div class="nav-links">
+      <a href="#hero">Úvod</a>
+      <a href="#services">Služby</a>
+      <a href="#gallery">Galéria</a>
+      <a href="#about">O nás</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+    <div class="theme-toggle" id="themeToggle" role="button" aria-label="Prepnúť tému" tabindex="0">
+      <div class="toggle-track">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="toggle-label" id="toggleLabel">Tmavý</span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO — full bleed -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-label">Autodoprava · ČR · SR · EÚ</div>
+    <h1>Vašu zákazku<br>zvládneme <em>spoľahlivo</em></h1>
+    <div class="hero-dash"></div>
+    <p class="hero-sub">Profesionálna autodoprava Vladimír Jerie — privedieme a odvedieme čokoľvek, kamkoľvek, presne načas. S osobným prístupom a zárukou spoľahlivosti.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-solid">Cenová ponuka</a>
+      <a href="#services" class="btn-outline">Naše služby</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=85" alt="Autodoprava">
+    <div class="hero-badge">
+      <div class="hb-label">Dostupní</div>
+      <div class="hb-val">24 / 7</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="sg"><span class="sg-n">15+</span><span class="sg-l">Rokov praxe</span></div>
+    <div class="sg"><span class="sg-n">24/7</span><span class="sg-l">Dostupnosť</span></div>
+    <div class="sg"><span class="sg-n">EU</span><span class="sg-l">Dosah</span></div>
+    <div class="sg"><span class="sg-n">100%</span><span class="sg-l">Spoľahlivosť</span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-eyebrow">Čo ponúkame</div>
+    <h2 class="section-heading">Naše <em>služby</em></h2>
+    <div class="services-layout">
+      <div class="svc-item">
+        <span class="svc-index">01</span>
+        <div class="svc-content">
+          <div class="svc-name">Vnútroštátna preprava</div>
+          <p class="svc-desc">Rýchla a spoľahlivá preprava nákladov po Česku a Slovensku. Doručenie garantované v dohodnutom termíne.</p>
+        </div>
+        <span class="svc-arrow">→</span>
+      </div>
+      <div class="svc-item">
+        <span class="svc-index">02</span>
+        <div class="svc-content">
+          <div class="svc-name">Medzinárodná preprava</div>
+          <p class="svc-desc">Pokrývame celú EÚ a ďalej. Skúsení vodiči, kompletná dokumentácia a colné formalitiy vybavené.</p>
+        </div>
+        <span class="svc-arrow">→</span>
+      </div>
+      <div class="svc-item">
+        <span class="svc-index">03</span>
+        <div class="svc-content">
+          <div class="svc-name">Sťahovacie služby</div>
+          <p class="svc-desc">Kompletné sťahovanie — od balenia a nakládky až po transport a vykládku. Pre domácnosti aj firmy.</p>
+        </div>
+        <span class="svc-arrow">→</span>
+      </div>
+      <div class="svc-item">
+        <span class="svc-index">04</span>
+        <div class="svc-content">
+          <div class="svc-name">Expresná preprava</div>
+          <p class="svc-desc">Prioritné doručenie do 24 hodín kdekoľvek v ČR a SR. Pre urgentné zákazky dostupní kedykoľvek.</p>
+        </div>
+        <span class="svc-arrow">→</span>
+      </div>
+      <div class="svc-item">
+        <span class="svc-index">05</span>
+        <div class="svc-content">
+          <div class="svc-name">Nadrozmerné náklady</div>
+          <p class="svc-desc">Špeciálna preprava pre ťažké a nadrozmerné náklady so všetkými potrebnými povoleniami.</p>
+        </div>
+        <span class="svc-arrow">→</span>
+      </div>
+      <div class="svc-item">
+        <span class="svc-index">06</span>
+        <div class="svc-content">
+          <div class="svc-name">Pravidelné linky</div>
+          <p class="svc-desc">Pravidelná preprava na dohodnutých trasách. Ideálne pre firmy s opakujúcimi sa prepravnými potrebami.</p>
+        </div>
+        <span class="svc-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-eyebrow">Naša práca</div>
+    <h2 class="section-heading">Flotila &amp; <em>prepravy</em></h2>
+    <div class="gallery-grid">
+      <div class="gal-card">
+        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Diaľnica">
+        <div class="gal-info"><span>Diaľničná preprava</span></div>
+      </div>
+      <div class="gal-card">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Logistika">
+        <div class="gal-info"><span>Logistika</span></div>
+      </div>
+      <div class="gal-card">
+        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="Flotila">
+        <div class="gal-info"><span>Flotila</span></div>
+      </div>
+      <div class="gal-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Doručenie">
+        <div class="gal-info"><span>Doručenie</span></div>
+      </div>
+      <div class="gal-card">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80" alt="Vozidlo">
+        <div class="gal-info"><span>Naše vozidlá</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-inner">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=85" alt="O nás">
+      </div>
+      <div class="about-text">
+        <div class="section-eyebrow">Kto sme</div>
+        <h2 class="section-heading">Vladimír <em>Jerie</em></h2>
+        <p class="about-body">Autodoprava s osobným prístupom a profesionálnou starostlivosťou o každú zákazku. Disponujeme modernou flotilou vozidiel a rozsiahlou sieťou kontaktov naprieč Európou.</p>
+        <p class="about-body">Každý zákazník je pre nás rovnako dôležitý — od malého sťahovania až po pravidelnú firemnú logistiku. Vaša spokojnosť je naším záväzkom.</p>
+        <div class="about-quote">
+          <p>"Privedieme, odvedieme — všetko, všade, včas."</p>
+        </div>
+        <a href="tel:+420608800504" class="contact-cta">
+          <span class="cta-icon">📞</span>
+          <div>
+            <div class="cta-label">Zavolajte nám</div>
+            <div class="cta-num">+420 608 800 504</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-eyebrow">Spojte sa s nami</div>
+    <h2 class="section-heading">Dopýtajte sa <em>nás</em></h2>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div class="ci-row">
+          <div class="ci-label">Telefón</div>
+          <div class="ci-val"><a href="tel:+420608800504">+420 608 800 504</a></div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Web</div>
+          <div class="ci-val"><a href="https://autoscelem.com">autoscelem.com</a></div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Pôsobnosť</div>
+          <div class="ci-val">ČR · SR · Európa</div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-label">Dostupnosť</div>
+          <div class="ci-val" style="color:var(--accent-warm)">24 hodín · 7 dní</div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-row-2">
+          <div class="fg">
+            <label>Meno a priezvisko</label>
+            <input type="text" placeholder="Ján Novák">
+          </div>
+          <div class="fg">
+            <label>Telefón alebo email</label>
+            <input type="text" placeholder="+421 000 000 000">
+          </div>
+        </div>
+        <div class="fg">
+          <label>Typ prepravy</label>
+          <select>
+            <option>Vnútroštátna preprava</option>
+            <option>Medzinárodná preprava</option>
+            <option>Sťahovacie služby</option>
+            <option>Expresná preprava</option>
+            <option>Nadrozmerné náklady</option>
+            <option>Iné</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Popis zákazky</label>
+          <textarea placeholder="Opíšte váš náklad, trasu, termín a ďalšie požiadavky..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Odoslať dopyt</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="f-logo">Auto<span>SCELEM</span></div>
+    <div class="f-copy">© 2024 Vladimír Jerie · Autodoprava · autoscelem.com</div>
+  </div>
+</footer>
+
+<script>
+const html = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const label = document.getElementById('toggleLabel');
+
+function setTheme(theme) {
+  html.setAttribute('data-theme', theme);
+  label.textContent = theme === 'light' ? 'Tmavý' : 'Svetlý';
+  localStorage.setItem('theme', theme);
+}
+
+// Init from saved preference or system preference
+const saved = localStorage.getItem('theme');
+if (saved) {
+  setTheme(saved);
+} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  setTheme('dark');
+}
+
+toggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme');
+  setTheme(current === 'light' ? 'dark' : 'light');
+});
+
+toggle.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    toggle.click();
+  }
+});
+</script>
+
+</body>
+</html>

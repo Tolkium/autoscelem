@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoSCELEM — Autodoprava Vladimír Jerie</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#0a0a0a;
+  --amber:#F5A623;
+  --white:#f0ece4;
+  --gray:#1a1a1a;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Space Mono',monospace;
+  overflow-x:hidden;
+}
+
+/* TICKER */
+.ticker-wrap{
+  background:var(--amber);
+  color:var(--black);
+  overflow:hidden;
+  white-space:nowrap;
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1000;
+  height:28px;
+  display:flex;align-items:center;
+}
+.ticker-inner{
+  display:inline-block;
+  animation:ticker 22s linear infinite;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;
+  letter-spacing:3px;
+}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-item{display:inline-block;padding:0 40px;}
+.ticker-sep{color:#000;opacity:.4;}
+
+/* NAVBAR */
+nav{
+  position:fixed;
+  top:28px;left:0;right:0;
+  z-index:999;
+  background:var(--amber);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+  height:64px;
+  border-bottom:3px solid var(--black);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;
+  color:var(--black);
+  letter-spacing:4px;
+}
+.nav-links{display:flex;gap:36px;}
+.nav-links a{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  color:var(--black);
+  text-decoration:none;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:opacity .2s;
+}
+.nav-links a:hover{opacity:.5;}
+
+/* FILMSTRIP BORDER */
+.filmstrip{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:32px;
+  background:var(--black);
+  border-right:2px solid var(--amber);
+  z-index:50;
+  overflow:hidden;
+}
+.filmstrip::after{
+  content:'';
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:12px;
+  height:200%;
+  background:repeating-linear-gradient(to bottom, var(--amber) 0px, var(--amber) 18px, transparent 18px, transparent 36px);
+  animation:filmscroll 4s linear infinite;
+}
+@keyframes filmscroll{from{transform:translateX(-50%) translateY(0);}to{transform:translateX(-50%) translateY(-50%);}}
+
+.filmstrip-r{
+  position:fixed;
+  right:0;top:0;bottom:0;
+  width:32px;
+  background:var(--black);
+  border-left:2px solid var(--amber);
+  z-index:50;
+  overflow:hidden;
+}
+.filmstrip-r::after{
+  content:'';
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:12px;
+  height:200%;
+  background:repeating-linear-gradient(to bottom, var(--amber) 0px, var(--amber) 18px, transparent 18px, transparent 36px);
+  animation:filmscroll2 4s linear infinite reverse;
+}
+@keyframes filmscroll2{from{transform:translateX(-50%) translateY(0);}to{transform:translateX(-50%) translateY(-50%);}}
+
+/* MAIN WRAPPER */
+.main{
+  margin-left:32px;
+  margin-right:32px;
+  padding-top:92px;
+}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  border-bottom:3px solid var(--amber);
+  position:relative;
+  overflow:hidden;
+}
+.hero-left{
+  padding:80px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-right:3px solid var(--amber);
+  position:relative;
+}
+.hero-tag{
+  font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:24px;text-transform:uppercase;
+}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(64px,9vw,140px);
+  line-height:.95;
+  color:var(--white);
+  margin-bottom:32px;
+}
+.hero-title span{color:var(--amber);}
+.hero-sub{
+  font-size:12px;line-height:1.8;color:#888;max-width:400px;margin-bottom:48px;
+}
+.btn-primary{
+  display:inline-block;
+  background:var(--amber);
+  color:var(--black);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;
+  letter-spacing:3px;
+  padding:16px 48px;
+  text-decoration:none;
+  border:3px solid var(--amber);
+  transition:all .2s;
+  align-self:flex-start;
+}
+.btn-primary:hover{background:transparent;color:var(--amber);}
+
+.hero-right{
+  position:relative;
+  overflow:hidden;
+}
+.hero-right img{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:grayscale(100%) contrast(1.1);
+  display:block;
+}
+.hero-right::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(245,166,35,.15) 0%, transparent 60%);
+}
+.hero-coords{
+  position:absolute;bottom:24px;right:24px;
+  font-size:10px;letter-spacing:2px;color:var(--amber);opacity:.7;
+}
+
+/* STATS BAR */
+.stats-bar{
+  background:var(--gray);
+  border-bottom:3px solid var(--amber);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.stat{
+  padding:40px 32px;
+  border-right:2px solid #2a2a2a;
+  text-align:center;
+}
+.stat:last-child{border-right:none;}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:56px;
+  color:var(--amber);
+  display:block;
+}
+.stat-label{font-size:10px;letter-spacing:3px;color:#666;text-transform:uppercase;}
+
+/* SERVICES */
+#services{padding:100px 60px;border-bottom:3px solid var(--amber);}
+.sec-tag{font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:16px;display:block;}
+.sec-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(40px,6vw,90px);
+  color:var(--white);
+  margin-bottom:64px;
+  line-height:1;
+}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+.svc{
+  background:var(--gray);
+  padding:48px 36px;
+  border:2px solid transparent;
+  transition:border-color .3s, transform .3s;
+  position:relative;
+  overflow:hidden;
+}
+.svc::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:var(--amber);
+  transform:scaleY(0);
+  transform-origin:bottom;
+  transition:transform .3s;
+}
+.svc:hover::before{transform:scaleY(1);}
+.svc:hover{border-color:var(--amber);transform:translateY(-4px);}
+.svc-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:72px;
+  color:#2a2a2a;
+  line-height:1;
+  margin-bottom:16px;
+  display:block;
+}
+.svc-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--white);margin-bottom:16px;letter-spacing:2px;}
+.svc-text{font-size:12px;color:#666;line-height:1.8;}
+
+/* GALLERY */
+#gallery{padding:100px 60px;border-bottom:3px solid var(--amber);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto auto;
+  gap:4px;
+  margin-top:48px;
+}
+.gal-item{
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:4/3;
+  cursor:pointer;
+}
+.gal-item:first-child{grid-column:span 2;aspect-ratio:16/7;}
+.gal-item img{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:grayscale(100%) contrast(1.15);
+  transition:filter .4s, transform .4s;
+  display:block;
+}
+.gal-item:hover img{filter:grayscale(0%) contrast(1);transform:scale(1.04);}
+.gal-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:var(--amber);
+  color:var(--black);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;
+  letter-spacing:3px;
+  padding:10px 20px;
+  transform:translateY(100%);
+  transition:transform .3s;
+}
+.gal-item:hover .gal-label{transform:translateY(0);}
+
+/* ABOUT */
+#about{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:3px solid var(--amber);
+}
+.about-img{position:relative;overflow:hidden;min-height:500px;}
+.about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(80%);}
+.about-content{
+  padding:80px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-left:3px solid var(--amber);
+}
+.about-content p{font-size:13px;line-height:2;color:#aaa;margin-bottom:24px;}
+.highlight-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:36px;
+  color:var(--amber);
+  line-height:1.2;
+  margin-bottom:32px;
+}
+
+/* CONTACT */
+#contact{padding:100px 60px;}
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  margin-top:48px;
+}
+.contact-info{display:flex;flex-direction:column;gap:32px;}
+.contact-item-label{font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:8px;display:block;text-transform:uppercase;}
+.contact-item-val{font-size:20px;font-weight:700;color:var(--white);}
+.contact-item-val a{color:var(--amber);text-decoration:none;}
+
+.contact-form{display:flex;flex-direction:column;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group label{font-size:10px;letter-spacing:3px;color:#666;text-transform:uppercase;}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  background:#111;
+  border:2px solid #2a2a2a;
+  color:var(--white);
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  padding:14px 16px;
+  outline:none;
+  transition:border-color .2s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:var(--amber);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-group select option{background:#111;}
+.btn-submit{
+  background:var(--amber);
+  color:var(--black);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;
+  letter-spacing:3px;
+  padding:16px 48px;
+  border:3px solid var(--amber);
+  cursor:pointer;
+  transition:all .2s;
+  margin-top:8px;
+  align-self:flex-start;
+}
+.btn-submit:hover{background:transparent;color:var(--amber);}
+
+/* FOOTER */
+footer{
+  background:var(--gray);
+  border-top:3px solid var(--amber);
+  padding:32px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);letter-spacing:4px;}
+.footer-copy{font-size:11px;color:#444;}
+
+@media(max-width:900px){
+  #hero,#about,.contact-grid{grid-template-columns:1fr;}
+  .hero-right{height:300px;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .services-grid,.gallery-grid{grid-template-columns:1fr;}
+  .gal-item:first-child{grid-column:1;}
+  nav{padding:0 20px;}
+  .nav-links{gap:16px;}
+  #services,#gallery,#contact{padding:60px 24px;}
+  .about-content{padding:60px 24px;}
+  footer{flex-direction:column;gap:16px;text-align:center;}
+  .contact-grid{gap:40px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span class="ticker-item">AUTODOPRAVA VLADIMÍR JERIE</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">PRIVEDIEME — ODVEDIEME — VŠETKO</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">VŠADE — VČAS</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">+420 608 800 504</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">AUTOSCELEM.COM</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">AUTODOPRAVA VLADIMÍR JERIE</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">PRIVEDIEME — ODVEDIEME — VŠETKO</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">VŠADE — VČAS</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">+420 608 800 504</span><span class="ticker-sep"> ◆ </span>
+    <span class="ticker-item">AUTOSCELEM.COM</span><span class="ticker-sep"> ◆ </span>
+  </div>
+</div>
+
+<!-- FILMSTRIP BORDERS -->
+<div class="filmstrip"></div>
+<div class="filmstrip-r"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">AutoSCELEM</div>
+  <div class="nav-links">
+    <a href="#hero">Úvod</a>
+    <a href="#services">Služby</a>
+    <a href="#gallery">Galéria</a>
+    <a href="#about">O nás</a>
+    <a href="#contact">Kontakt</a>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <span class="hero-tag">// Autodoprava — CZ & SK & EU</span>
+      <h1 class="hero-title">Privezie<span>me.</span><br>Odvezie<span>me.</span><br>Všetko.</h1>
+      <p class="hero-sub">Profesionálna autodoprava Vladimír Jerie. Nákladná preprava po Česku, Slovensku a celej Európe. Včas, spoľahlivo, za férovú cenu.</p>
+      <a href="#contact" class="btn-primary">CENOVÁ PONUKA</a>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=900&q=80" alt="Nákladné vozidlo">
+      <div class="hero-coords">48°N 17°E / AUTODOPRAVA</div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Rokov skúseností</span></div>
+    <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Dostupnosť</span></div>
+    <div class="stat"><span class="stat-num">EU</span><span class="stat-label">Pokrytie</span></div>
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Spoľahlivosť</span></div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <span class="sec-tag">// Čo robíme</span>
+    <h2 class="sec-title">Naše Služby</h2>
+    <div class="services-grid">
+      <div class="svc">
+        <span class="svc-num">01</span>
+        <div class="svc-title">Vnútroštátna Preprava</div>
+        <p class="svc-text">Rýchla a spoľahlivá preprava nákladu po celej Českej republike a Slovensku. Doručenie v dohodnutom termíne.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-num">02</span>
+        <div class="svc-title">Medzinárodná Preprava</div>
+        <p class="svc-text">Preprava do krajín EÚ a ďalej. Skúsení vodiči, všetky potrebné povolenia a dokumentácia.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-num">03</span>
+        <div class="svc-title">Sťahovacie Služby</div>
+        <p class="svc-text">Kompletné sťahovacie služby pre domácnosti aj firmy. Balenie, nakládka, transport, vykládka.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-num">04</span>
+        <div class="svc-title">Nadrozmerný Náklad</div>
+        <p class="svc-text">Preprava nadrozmerných a ťažkých nákladov. Špeciálne vozidlá a povolenia zariadíme.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-num">05</span>
+        <div class="svc-title">Expresná Preprava</div>
+        <p class="svc-text">Keď záleží na čase. Expresné doručenie do 24 hodín kdekoľvek v ČR a SR.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-num">06</span>
+        <div class="svc-title">Pravidelné Linky</div>
+        <p class="svc-text">Pravidelné prepravné linky na dohodnutých trasách. Ideálne pre firmy s opakujúcimi sa potrebami.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <span class="sec-tag">// Flotila & Prepravy</span>
+    <h2 class="sec-title">Galéria</h2>
+    <div class="gallery-grid">
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Nákladné auto na diaľnici">
+        <div class="gal-label">DIAĽNIČNÁ PREPRAVA</div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Sklad">
+        <div class="gal-label">LOGISTIKA</div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="Nákladné vozidlá">
+        <div class="gal-label">FLOTILA</div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80" alt="Preprava">
+        <div class="gal-label">MEDZINÁRODNÁ</div>
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Doručenie">
+        <div class="gal-label">DORUČENIE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="O nás">
+    </div>
+    <div class="about-content">
+      <span class="sec-tag">// O nás</span>
+      <div class="highlight-text">"Privedieme, odvedieme — všetko, všade, včas."</div>
+      <p>Vladimír Jerie prevádzkuje autodopravnú spoločnosť AutoSCELEM s vášňou pre spoľahlivú logistiku. Každú zákazku berieme ako osobnú zodpovednosť.</p>
+      <p>Disponujeme modernou flotilou vozidiel, skúsenými vodičmi a rozsiahlou sieťou kontaktov naprieč celou Európou. Vaše náklady sú u nás v bezpečí.</p>
+      <a href="tel:+420608800504" class="btn-primary">+420 608 800 504</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <span class="sec-tag">// Kontakt</span>
+    <h2 class="sec-title">Dopýtajte sa</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div>
+          <span class="contact-item-label">Telefón</span>
+          <div class="contact-item-val"><a href="tel:+420608800504">+420 608 800 504</a></div>
+        </div>
+        <div>
+          <span class="contact-item-label">Web</span>
+          <div class="contact-item-val"><a href="https://autoscelem.com">autoscelem.com</a></div>
+        </div>
+        <div>
+          <span class="contact-item-label">Prevádzka</span>
+          <div class="contact-item-val">Česká republika</div>
+        </div>
+        <div>
+          <span class="contact-item-label">Dostupnosť</span>
+          <div class="contact-item-val" style="color:var(--amber)">24 / 7 / 365</div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Meno a priezvisko</label>
+          <input type="text" placeholder="Ján Novák">
+        </div>
+        <div class="form-group">
+          <label>Telefón / Email</label>
+          <input type="text" placeholder="+421 000 000 000">
+        </div>
+        <div class="form-group">
+          <label>Typ prepravy</label>
+          <select>
+            <option>Vnútroštátna</option>
+            <option>Medzinárodná</option>
+            <option>Sťahovanie</option>
+            <option>Expresná</option>
+            <option>Iné</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Správa</label>
+          <textarea placeholder="Popíšte váš náklad, trasu a požiadavky..."></textarea>
+        </div>
+        <button class="btn-submit">ODOSLAŤ DOPYT</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">AutoSCELEM</div>
+    <div class="footer-copy">© 2024 Vladimír Jerie — Autodoprava. Všetky práva vyhradené.</div>
+    <div class="footer-copy">autoscelem.com</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
