@@ -362,10 +362,16 @@ footer span:last-child { text-align:right; }
   nav { grid-template-columns:1fr 1fr; }
   nav ul { display:none; }
   .nav-actions { border-left:none; }
-  .hero-grid-container { grid-template-columns:1fr; grid-template-rows:auto; }
+  .hero-grid-container {
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
+    min-height:auto;
+    gap:0;
+  }
   .hero-spine { display:none; }
-  .hero-photo { height:280px; grid-row:span 1; }
-  .hero-bottom { grid-template-columns:1fr 1fr; }
+  .hero-centre { grid-column:1; border-bottom:1px solid var(--border); }
+  .hero-photo { height:200px; grid-row:auto; grid-column:1; border-left:none; }
+  .hero-bottom { grid-column:1; grid-template-columns:1fr 1fr; }
   .svc-header-row { grid-template-columns:1fr; }
   .svc-grid-inner { grid-template-columns:1fr 1fr; border-left:none; }
   .o-nas-inner { grid-template-columns:1fr; }
@@ -381,17 +387,22 @@ footer span:last-child { text-align:right; }
   nav { padding:0 1rem; box-sizing:border-box; max-width:100%; grid-template-columns:1fr auto; }
   .logo { padding:0 1rem; font-size:.75rem; border-right:none; }
   nav ul { display:none; }
-  .nav-actions .tm { display:none; }
   .nav-actions { padding:0 .5rem; gap:.5rem; }
+  .nav-actions .tm { display:flex; align-items:center; justify-content:center; }
   .nav-tel-sm { font-size:.7rem; }
-  .hero-grid-container { padding:2rem 1rem 3rem; }
+  .hero-grid-container {
+    padding:1.5rem 1rem 2rem;
+    max-width:100%;
+    overflow:hidden;
+  }
+  .hero-centre { padding:2rem 1rem; }
   .hero-tag-line { font-size:.55rem; }
   .hero-centre h1 { font-size:clamp(1.75rem,8vw,3rem); word-break:break-word; overflow-wrap:break-word; }
   .hero-motto { font-size:.65rem; max-width:100%; }
   .hero-ctas { flex-direction:column; width:100%; }
   .hc-primary, .hc-secondary { width:100%; box-sizing:border-box; text-align:center; }
-  .hero-bottom { grid-template-columns:1fr; padding:1rem; gap:1rem; }
-  .hero-photo { height:220px; }
+  .hero-bottom { grid-column:1; grid-template-columns:1fr; padding:1rem; gap:1rem; }
+  .hero-photo { height:220px; grid-column:1; border-left:none; }
   #sluzby { padding:3rem 1rem; }
   .svc-grid-inner { grid-template-columns:1fr; }
   .svc-header-row { padding:0 1rem; }
