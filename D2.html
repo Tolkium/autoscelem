@@ -21,12 +21,11 @@ body{
   overflow-x:hidden;
 }
 
-/* TICKER */
+/* TICKER — seamless infinite scroll */
 .ticker-wrap{
   background:var(--amber);
   color:var(--black);
   overflow:hidden;
-  white-space:nowrap;
   position:fixed;
   top:0;left:0;right:0;
   z-index:1000;
@@ -34,15 +33,26 @@ body{
   display:flex;align-items:center;
 }
 .ticker-inner{
-  display:inline-block;
-  animation:ticker 22s linear infinite;
+  display:flex;
+  width:max-content;
+  animation:ticker 30s linear infinite;
+  will-change:transform;
   font-family:'Bebas Neue',sans-serif;
   font-size:16px;
   letter-spacing:3px;
 }
-@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.ticker-item{display:inline-block;padding:0 40px;}
+.ticker-track{
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+  padding:0 0.5rem;
+}
+.ticker-item{display:inline-block;padding:0 40px;flex-shrink:0;white-space:nowrap;}
 .ticker-sep{color:#000;opacity:.4;}
+@keyframes ticker{
+  0%{transform:translate3d(0,0,0);}
+  100%{transform:translate3d(-50%,0,0);}
+}
 
 /* NAVBAR */
 nav{
@@ -122,9 +132,9 @@ nav{
   padding-top:92px;
 }
 
-/* HERO */
+/* HERO — fit in viewport below fixed ticker+nav (28+64=92px) */
 #hero{
-  min-height:100vh;
+  min-height:calc(100vh - 92px);
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:0;
@@ -381,19 +391,23 @@ footer{
 </head>
 <body>
 
-<!-- TICKER -->
+<!-- TICKER — two tracks for seamless loop -->
 <div class="ticker-wrap">
   <div class="ticker-inner">
-    <span class="ticker-item">AUTODOPRAVA VLADIMÍR JERIE</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">PRIVEDIEME — ODVEDIEME — VŠETKO</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">VŠADE — VČAS</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">+420 608 800 504</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">AUTOSCELEM.COM</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">AUTODOPRAVA VLADIMÍR JERIE</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">PRIVEDIEME — ODVEDIEME — VŠETKO</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">VŠADE — VČAS</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">+420 608 800 504</span><span class="ticker-sep"> ◆ </span>
-    <span class="ticker-item">AUTOSCELEM.COM</span><span class="ticker-sep"> ◆ </span>
+    <div class="ticker-track">
+      <span class="ticker-item">AUTODOPRAVA VLADIMÍR JERIE</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">PRIVEDIEME — ODVEDIEME — VŠETKO</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">VŠADE — VČAS</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">+420 608 800 504</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">AUTOSCELEM.COM</span><span class="ticker-sep"> ◆ </span>
+    </div>
+    <div class="ticker-track" aria-hidden="true">
+      <span class="ticker-item">AUTODOPRAVA VLADIMÍR JERIE</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">PRIVEDIEME — ODVEDIEME — VŠETKO</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">VŠADE — VČAS</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">+420 608 800 504</span><span class="ticker-sep"> ◆ </span>
+      <span class="ticker-item">AUTOSCELEM.COM</span><span class="ticker-sep"> ◆ </span>
+    </div>
   </div>
 </div>
 
@@ -577,5 +591,21 @@ footer{
 
 </div>
 
+<script>
+  (function(){
+    window.addEventListener('load',function(){
+      var track=document.querySelector('.ticker-track');
+      if(!track)return;
+      var w=track.offsetWidth;
+      if(w<=0)return;
+      var old=document.getElementById('ticker-keyframes');
+      if(old)old.remove();
+      var style=document.createElement('style');
+      style.id='ticker-keyframes';
+      style.textContent='@keyframes ticker{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-'+w+'px,0,0)}}';
+      document.head.appendChild(style);
+    });
+  })();
+</script>
 </body>
 </html>
