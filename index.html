@@ -4,6 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var path = window.location.pathname;
+      if (!/\/D[1-9](\.html)?$/.test(path)) {
+        var base = path.replace(/index\.html$/, '');
+        if (!base.endsWith('/')) base += '/';
+        window.location.replace(base + 'D1');
+      }
+    })();
+  </script>
   <title>AutoSCELEM – Vladimír Jerie | Autodoprava</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
