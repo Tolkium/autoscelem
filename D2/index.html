@@ -29,8 +29,11 @@ body{
   position:fixed;
   top:0;left:0;right:0;
   z-index:1000;
-  height:28px;
+  height:40px;
   display:flex;align-items:center;
+  line-height:1;
+  padding:0;
+  box-sizing:border-box;
 }
 .ticker-inner{
   display:flex;
@@ -40,6 +43,7 @@ body{
   font-family:'Bebas Neue',sans-serif;
   font-size:16px;
   letter-spacing:3px;
+  line-height:1;
 }
 .ticker-track{
   display:flex;
@@ -54,10 +58,10 @@ body{
   100%{transform:translate3d(-50%,0,0);}
 }
 
-/* NAVBAR */
+/* NAVBAR — overlaps ticker by 4px so no visible gap */
 nav{
   position:fixed;
-  top:28px;left:0;right:0;
+  top:36px;left:0;right:0;
   z-index:999;
   background:var(--amber);
   display:flex;align-items:center;justify-content:space-between;
@@ -65,16 +69,17 @@ nav{
   height:64px;
   border-bottom:3px solid var(--black);
 }
+.ticker-wrap{border-bottom:none;}
 .nav-logo{
   font-family:'Bebas Neue',sans-serif;
   font-size:28px;
   color:var(--black);
-  letter-spacing:4px;
+  letter-spacing:3px;
 }
 .nav-links{display:flex;gap:36px;}
 .nav-links a{
   font-family:'Space Mono',monospace;
-  font-size:11px;
+  font-size:14px;
   font-weight:700;
   color:var(--black);
   text-decoration:none;
@@ -126,42 +131,50 @@ nav{
 }
 @keyframes filmscroll2{from{transform:translateX(-50%) translateY(0);}to{transform:translateX(-50%) translateY(-50%);}}
 
-/* MAIN WRAPPER */
+/* MAIN WRAPPER — content stays between filmstrip bars (32px each side) */
 .main{
   margin-left:32px;
   margin-right:32px;
-  padding-top:92px;
+  padding-top:100px;
+  max-width:calc(100% - 64px);
+  box-sizing:border-box;
+  overflow-x:hidden;
 }
 
-/* HERO — fit in viewport below fixed ticker+nav (28+64=92px) */
+/* HERO — fit in viewport below fixed ticker+nav (36+64=100px) */
 #hero{
-  min-height:calc(100vh - 92px);
+  min-height:calc(100vh - 100px);
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:0;
   border-bottom:3px solid var(--amber);
   position:relative;
   overflow:hidden;
+  max-width:100%;
+  box-sizing:border-box;
 }
 .hero-left{
   padding:80px 60px;
   display:flex;flex-direction:column;justify-content:center;
   border-right:3px solid var(--amber);
   position:relative;
+  max-width:100%;
+  box-sizing:border-box;
 }
 .hero-tag{
-  font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:24px;text-transform:uppercase;
+  font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:24px;text-transform:uppercase;text-align:left;
 }
 .hero-title{
   font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(64px,9vw,140px);
+  font-size:clamp(56px,9vw,140px);
   line-height:.95;
   color:var(--white);
   margin-bottom:32px;
+  text-align:left;
 }
 .hero-title span{color:var(--amber);}
 .hero-sub{
-  font-size:12px;line-height:1.8;color:#888;max-width:400px;margin-bottom:48px;
+  font-size:12px;line-height:1.8;color:#888;max-width:400px;margin-bottom:48px;text-align:left;
 }
 .btn-primary{
   display:inline-block;
@@ -176,7 +189,7 @@ nav{
   transition:all .2s;
   align-self:flex-start;
 }
-.btn-primary:hover{background:transparent;color:var(--amber);}
+.btn-primary:hover{background:#e09a20;color:var(--black);border-color:#e09a20;}
 
 .hero-right{
   position:relative;
@@ -198,17 +211,20 @@ nav{
   font-size:10px;letter-spacing:2px;color:var(--amber);opacity:.7;
 }
 
-/* STATS BAR */
+/* STATS BAR — contained within main, no overflow */
 .stats-bar{
   background:var(--gray);
   border-bottom:3px solid var(--amber);
   display:grid;
   grid-template-columns:repeat(4,1fr);
+  max-width:100%;
+  box-sizing:border-box;
 }
 .stat{
   padding:40px 32px;
   border-right:2px solid #2a2a2a;
   text-align:center;
+  min-width:0;
 }
 .stat:last-child{border-right:none;}
 .stat-num{
@@ -220,7 +236,7 @@ nav{
 .stat-label{font-size:10px;letter-spacing:3px;color:#666;text-transform:uppercase;}
 
 /* SERVICES */
-#services{padding:100px 60px;border-bottom:3px solid var(--amber);}
+#services{padding:100px 60px;border-bottom:3px solid var(--amber);box-sizing:border-box;}
 .sec-tag{font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:16px;display:block;}
 .sec-title{
   font-family:'Bebas Neue',sans-serif;
@@ -229,7 +245,7 @@ nav{
   margin-bottom:64px;
   line-height:1;
 }
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:100%;box-sizing:border-box;}
 .svc{
   background:var(--gray);
   padding:48px 36px;
@@ -237,6 +253,7 @@ nav{
   transition:border-color .3s, transform .3s;
   position:relative;
   overflow:hidden;
+  min-width:0;
 }
 .svc::before{
   content:'';
@@ -260,13 +277,14 @@ nav{
 .svc-text{font-size:12px;color:#666;line-height:1.8;}
 
 /* GALLERY */
-#gallery{padding:100px 60px;border-bottom:3px solid var(--amber);}
+#gallery{padding:100px 60px;border-bottom:3px solid var(--amber);box-sizing:border-box;}
 .gallery-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   grid-template-rows:auto auto;
   gap:4px;
   margin-top:48px;
+  max-width:100%;
 }
 .gal-item{
   position:relative;
@@ -377,7 +395,8 @@ footer{
 
 @media(max-width:900px){
   #hero,#about,.contact-grid{grid-template-columns:1fr;}
-  .hero-right{height:300px;}
+  #hero{grid-template-rows:auto;}
+  .hero-right{height:320px;min-height:280px;}
   .stats-bar{grid-template-columns:repeat(2,1fr);}
   .services-grid,.gallery-grid{grid-template-columns:1fr;}
   .gal-item:first-child{grid-column:1;}
@@ -389,25 +408,37 @@ footer{
   .contact-grid{gap:40px;}
 }
 @media(max-width:768px){
-  .ticker-wrap{height:22px;font-size:13px;}
+  .ticker-wrap{height:30px;font-size:13px;}
   nav{height:52px;padding:0 10px;}
-  .nav-logo{font-size:16px;letter-spacing:1px;}
+  .nav-logo{font-size:20px;letter-spacing:1px;}
   .nav-links{display:none;}
-  .nav-tel-mobile{display:block;font-size:12px;font-weight:700;color:var(--black);text-decoration:none;}
+  .nav-tel-mobile{display:block;font-size:14px;font-weight:700;color:var(--black);text-decoration:none;}
   .nav-tel-mobile:hover{opacity:.8;}
-  .main{padding-top:74px;}
-  .main{margin-left:12px;margin-right:12px;max-width:100%;box-sizing:border-box;}
-  #hero{min-height:calc(100vh - 74px);}
+  .main{padding-top:82px;}
+  .main{margin-left:32px;margin-right:32px;max-width:calc(100% - 64px);box-sizing:border-box;}
+  #hero{
+    min-height:auto;
+    grid-template-columns:1fr;
+    grid-template-rows:calc(100vh - 82px) auto;
+  }
   .hero-left{
-    padding:2.5rem 1.5rem;
-    text-align:center;
+    padding:1.5rem 24px 8rem 24px;
+    text-align:left;
     align-items:center;
+    justify-content:space-between;
     border-right:none;
     border-bottom:3px solid var(--amber);
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+    min-height:calc(100vh - 82px);
   }
-  .hero-title{text-align:left;}
-  .hero-sub{margin-left:auto;margin-right:auto;}
-  .btn-primary{align-self:center;}
+  .hero-text-wrap{display:flex;flex-direction:column;align-items:center;}
+  .hero-tag{margin-bottom:0;margin-top:0.5rem;}
+  .hero-title{font-size:86px;line-height:.94;margin-bottom:0.2rem;text-align:left;width:fit-content;max-width:100%;margin-left:auto;margin-right:auto;}
+  .hero-sub{font-size:15px;margin:0 auto;max-width:340px;line-height:1.65;text-align:left;}
+  .hero-left .btn-primary{margin-top:0;}
+  .btn-primary{align-self:center;font-size:24px;padding:20px 56px;}
   #services{padding:3rem 1rem;box-sizing:border-box;}
   .services-grid{max-width:100%;}
   #gallery,#contact{padding:3rem 1rem;}
@@ -461,8 +492,10 @@ footer{
   <section id="hero">
     <div class="hero-left">
       <span class="hero-tag">// Autodoprava — CZ & SK & EU</span>
-      <h1 class="hero-title">Privezie<span>me.</span><br>Odvezie<span>me.</span><br>Všetko.</h1>
-      <p class="hero-sub">Profesionálna autodoprava Vladimír Jerie. Nákladná preprava po Česku, Slovensku a celej Európe. Včas, spoľahlivo, za férovú cenu.</p>
+      <div class="hero-text-wrap">
+        <h1 class="hero-title">Privezie<span>me.</span><br>Odvezie<span>me.</span><br>Všetko.</h1>
+        <p class="hero-sub">Profesionálna autodoprava Vladimír Jerie. Nákladná preprava po Česku, Slovensku a celej Európe. Včas, spoľahlivo, za férovú cenu.</p>
+      </div>
       <a href="#contact" class="btn-primary">CENOVÁ PONUKA</a>
     </div>
     <div class="hero-right">
