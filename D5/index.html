@@ -377,6 +377,27 @@ footer span:last-child { text-align:right; }
   footer { grid-template-columns:1fr; gap:.5rem; }
   footer span:nth-child(2), footer span:last-child { text-align:left; }
 }
+@media(max-width:768px){
+  nav { padding:0 1rem; box-sizing:border-box; max-width:100%; grid-template-columns:1fr auto; }
+  .logo { padding:0 1rem; font-size:.75rem; border-right:none; }
+  nav ul { display:none; }
+  .nav-actions .tm { display:none; }
+  .nav-actions { padding:0 .5rem; gap:.5rem; }
+  .nav-tel-sm { font-size:.7rem; }
+  .hero-grid-container { padding:2rem 1rem 3rem; }
+  .hero-tag-line { font-size:.55rem; }
+  .hero-centre h1 { font-size:clamp(1.75rem,8vw,3rem); word-break:break-word; overflow-wrap:break-word; }
+  .hero-motto { font-size:.65rem; max-width:100%; }
+  .hero-ctas { flex-direction:column; width:100%; }
+  .hc-primary, .hc-secondary { width:100%; box-sizing:border-box; text-align:center; }
+  .hero-bottom { grid-template-columns:1fr; padding:1rem; gap:1rem; }
+  .hero-photo { height:220px; }
+  #sluzby { padding:3rem 1rem; }
+  .svc-grid-inner { grid-template-columns:1fr; }
+  .svc-header-row { padding:0 1rem; }
+  .o-nas-inner, .gallery-swiss, .kontakt-inner { padding:0 1rem; }
+  .gs:first-child, .gs:last-child { height:160px; }
+}
 </style>
 </head>
 <body>
@@ -528,6 +549,27 @@ function toggleTheme(){
   const h=document.documentElement;
   h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
 }
+(function(){
+  function copyTel(e){
+    var a=e.target.closest('a[href^="tel:"]');
+    if(!a)return;
+    var num=(a.getAttribute('href')||'').replace(/^tel:/i,'').trim();
+    if(num&&navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(num).then(function(){
+        var t=document.getElementById('tel-toast');
+        if(t)t.remove();
+        t=document.createElement('span');
+        t.id='tel-toast';
+        t.textContent='Číslo skopírované';
+        t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:8px 16px;border-radius:4px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
+        document.body.appendChild(t);
+        setTimeout(function(){if(t.parentNode)t.remove();},2500);
+      });
+    }
+  }
+  document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+})();
 </script>
+<style>@keyframes telFadeOut{to{opacity:0;}}</style>
 </body>
 </html>

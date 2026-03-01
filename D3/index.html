@@ -42,6 +42,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--pine);heigh
   color:var(--tan);text-decoration:none;transition:color .2s;
 }
 .nav-links a:hover{color:var(--clay);}
+.nav-tel-mobile{display:none;}
 
 /* HERO — full bleed pine bg, content centered */
 #hero{
@@ -250,6 +251,27 @@ footer{background:var(--darkpine);padding:26px 0;}
   .contact-layout{gap:44px;}
   .nav-links{gap:16px;}
 }
+@media(max-width:768px){
+  nav,.nav-inner{box-sizing:border-box;max-width:100%;}
+  .nav-inner{padding:0 1rem;}
+  .nav-logo{font-size:1rem;}
+  .nav-links{display:none;}
+  .nav-tel-mobile{display:block;font-size:.85rem;font-weight:700;color:var(--cream);text-decoration:none;}
+  .nav-tel-mobile:hover{color:var(--clay);}
+  .hero-inner{padding:0 1rem;min-height:auto;height:auto;padding-bottom:3rem;}
+  .hero-left{padding:2.5rem 0;border-bottom:1px solid rgba(255,255,255,.1);}
+  #hero{min-height:auto;padding-top:66px;}
+  h1{font-size:clamp(2rem,9vw,52px);word-break:break-word;overflow-wrap:break-word;}
+  .hero-sub{max-width:100%;}
+  .wrap,.stats-inner,.footer-inner{padding:0 1rem;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);padding:1rem;}
+  .stats-row .stat{padding:1.25rem .5rem;}
+  #services{padding:4rem 0;}
+  .services-oblique .svc{padding:1.5rem 0;}
+  .gallery-masonry{grid-template-columns:1fr;}
+  .about-text,.about-right{padding:2rem 1rem;}
+  .contact-layout{padding:0 1rem;gap:2rem;}
+}
 </style>
 </head>
 <body>
@@ -264,6 +286,7 @@ footer{background:var(--darkpine);padding:26px 0;}
       <a href="#about">O nás</a>
       <a href="#contact">Kontakt</a>
     </div>
+    <a href="tel:+420608800504" class="nav-tel-mobile">+420 608 800 504</a>
   </div>
 </nav>
 
@@ -377,5 +400,30 @@ footer{background:var(--darkpine);padding:26px 0;}
   </div>
 </footer>
 
+<script>
+(function(){
+  function copyTel(e){
+    var a=e.target.closest('a[href^="tel:"]');
+    if(!a)return;
+    var num=(a.getAttribute('href')||'').replace(/^tel:/i,'').trim();
+    if(num&&navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(num).then(function(){
+        var t=document.getElementById('tel-toast');
+        if(t)t.remove();
+        t=document.createElement('span');
+        t.id='tel-toast';
+        t.textContent='Číslo skopírované';
+        t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--clay);color:#fff;padding:8px 16px;border-radius:4px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
+        document.body.appendChild(t);
+        setTimeout(function(){if(t.parentNode)t.remove();},2500);
+      });
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+  });
+})();
+</script>
+<style>@keyframes telFadeOut{to{opacity:0;}}</style>
 </body>
 </html>
