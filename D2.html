@@ -188,6 +188,7 @@ nav{
   border:3px solid var(--amber);
   transition:all .2s;
   align-self:flex-start;
+  white-space:nowrap;
 }
 .btn-primary:hover{background:#e09a20;color:var(--black);border-color:#e09a20;}
 
@@ -225,6 +226,10 @@ nav{
   border-right:2px solid #2a2a2a;
   text-align:center;
   min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 .stat:last-child{border-right:none;}
 .stat-num{
@@ -232,6 +237,7 @@ nav{
   font-size:56px;
   color:var(--amber);
   display:block;
+  text-align:center;
 }
 .stat-label{font-size:10px;letter-spacing:3px;color:#666;text-transform:uppercase;}
 
@@ -318,14 +324,23 @@ nav{
 #about{
   display:grid;grid-template-columns:1fr 1fr;
   border-bottom:3px solid var(--amber);
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  overflow:hidden;
 }
-.about-img{position:relative;overflow:hidden;min-height:500px;}
+.about-img{position:relative;overflow:hidden;min-height:500px;min-width:0;}
 .about-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(80%);}
 .about-content{
   padding:80px 60px;
   display:flex;flex-direction:column;justify-content:center;
+  align-items:flex-start;
   border-left:3px solid var(--amber);
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
 }
+.about-content .btn-primary{align-self:center;margin-left:auto;margin-right:auto;}
 .about-content p{font-size:13px;line-height:2;color:#aaa;margin-bottom:24px;}
 .highlight-text{
   font-family:'Bebas Neue',sans-serif;
@@ -379,7 +394,8 @@ nav{
   cursor:pointer;
   transition:all .2s;
   margin-top:8px;
-  align-self:flex-start;
+  align-self:center;
+  white-space:nowrap;
 }
 .btn-submit:hover{background:transparent;color:var(--amber);}
 
@@ -440,7 +456,7 @@ footer{
   .hero-title{font-size:clamp(48px, 18vw, 86px);line-height:.94;margin-bottom:0.2rem;text-align:left;max-width:100%;min-width:0;margin-left:auto;margin-right:auto;}
   .hero-sub{font-size:15px;margin:0 auto;max-width:100%;line-height:1.65;text-align:left;}
   .hero-left .btn-primary{margin-top:0;}
-  .btn-primary{align-self:center;font-size:24px;padding:20px 56px;}
+  .btn-primary{align-self:center;font-size:clamp(16px, 5.5vw, 24px);padding:20px 56px;white-space:nowrap;max-width:min(100%, 260px);box-sizing:border-box;}
   #services{padding:3rem 1rem;box-sizing:border-box;}
   .services-grid{max-width:100%;}
   #gallery,#contact{padding:3rem 1rem;}
