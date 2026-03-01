@@ -430,13 +430,15 @@ footer{
     border-bottom:3px solid var(--amber);
     width:100%;
     max-width:100%;
+    min-width:0;
     box-sizing:border-box;
     min-height:calc(100vh - 82px);
+    overflow-x:hidden;
   }
-  .hero-text-wrap{display:flex;flex-direction:column;align-items:center;}
-  .hero-tag{margin-bottom:0;margin-top:0.5rem;}
-  .hero-title{font-size:86px;line-height:.94;margin-bottom:0.2rem;text-align:left;width:fit-content;max-width:100%;margin-left:auto;margin-right:auto;}
-  .hero-sub{font-size:15px;margin:0 auto;max-width:340px;line-height:1.65;text-align:left;}
+  .hero-text-wrap{display:flex;flex-direction:column;align-items:center;min-width:0;max-width:100%;}
+  .hero-tag{margin-bottom:0;margin-top:0.5rem;max-width:100%;}
+  .hero-title{font-size:clamp(48px, 18vw, 86px);line-height:.94;margin-bottom:0.2rem;text-align:left;max-width:100%;min-width:0;margin-left:auto;margin-right:auto;}
+  .hero-sub{font-size:15px;margin:0 auto;max-width:100%;line-height:1.65;text-align:left;}
   .hero-left .btn-primary{margin-top:0;}
   .btn-primary{align-self:center;font-size:24px;padding:20px 56px;}
   #services{padding:3rem 1rem;box-sizing:border-box;}
