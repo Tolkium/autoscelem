@@ -1,586 +1,1231 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sk" data-theme="light">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>autoscelem — Vladimír Jerie</title>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-/* ═══ DESIGN 5: NEO-SWISS GRID ═══
-   Aesthetic: Hyper-rational Swiss grid system meets neon-lit cargo logistics —
-   Unbounded geometric display, strict columnar grids, 
-   electric blue/bone white palette, precise whitespace, 
-   thin horizontal rules as structural skeleton */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>autoscelem — Vladimír Jerie</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ═══ DESIGN 5: NEO-SWISS GRID ═══ */
 
-[data-theme="dark"] {
-  --bg:       #040810;
-  --bg2:      #080d18;
-  --bg3:      #0c1220;
-  --surface:  #10182a;
-  --border:   rgba(255,255,255,.07);
-  --blue:     #0070ff;
-  --blue2:    #0050cc;
-  --blue-glow:rgba(0,112,255,.15);
-  --bone:     #f8f4ec;
-  --text:     #c8d4f0;
-  --muted:    #4a5880;
-  --inv-bg:   #f0ecf8;
-  --inv-text: #040810;
-}
-[data-theme="light"] {
-  --bg:       #f0ecf8;
-  --bg2:      #e8e4f4;
-  --bg3:      #ddd8ee;
-  --surface:  #ffffff;
-  --border:   rgba(0,0,0,.1);
-  --blue:     #0055cc;
-  --blue2:    #003899;
-  --blue-glow:rgba(0,85,204,.08);
-  --bone:     #040810;
-  --text:     #1a1c30;
-  --muted:    #6070a0;
-  --inv-bg:   #040810;
-  --inv-text: #f0ecf8;
-}
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  font-family:'Epilogue',sans-serif;
-  background:var(--bg); color:var(--text);
-  transition:background .4s, color .4s;
-  overflow-x:hidden;
-}
-
-::-webkit-scrollbar { width:2px; }
-::-webkit-scrollbar-thumb { background:var(--blue); }
-
-/* Subtle grid overlay */
-body::before {
-  content:'';
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size:60px 60px;
-  opacity:.4;
-}
-
-/* ══ NAV ══ */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:200;
-  height:60px; background:var(--bg);
-  border-bottom:1px solid var(--border);
-  display:grid;
-  grid-template-columns:240px 1fr 240px;
-  align-items:center;
-}
-.logo {
-  font-family:'Unbounded',sans-serif;
-  font-size:.85rem; font-weight:900;
-  color:var(--text); letter-spacing:1px;
-  padding:0 2rem;
-  border-right:1px solid var(--border);
-  height:60px; display:flex; align-items:center;
-}
-.logo em { color:var(--blue); font-style:normal; }
-nav ul {
-  list-style:none; display:flex;
-  justify-content:center; gap:0;
-}
-nav ul li a {
-  display:block; padding:0 1.25rem; height:60px; line-height:60px;
-  font-family:'Unbounded',sans-serif; font-size:.55rem; font-weight:400;
-  letter-spacing:2px; text-transform:uppercase;
-  color:var(--muted); text-decoration:none; transition:.2s;
-}
-nav ul li a:hover { color:var(--text); }
-.nav-actions {
-  height:60px; border-left:1px solid var(--border);
-  display:flex; align-items:center; justify-content:flex-end;
-  gap:.75rem; padding:0 1.5rem;
-}
-.nav-tel-sm {
-  font-family:'Unbounded',sans-serif; font-size:.55rem;
-  color:var(--blue); text-decoration:none; font-weight:700;
-  letter-spacing:.5px;
-}
-.nav-tel-sm:hover { color:var(--text); }
-.tm {
-  width:34px; height:34px; border:1px solid var(--border);
-  background:var(--surface); cursor:pointer; color:var(--text);
-  font-size:1.1rem; display:flex; align-items:center; justify-content:center;
-  transition:.2s; border-radius:4px;
-}
-.tm:hover { border-color:var(--blue); color:var(--blue); }
-[data-theme="light"] .tm { background:transparent; }
-
-/* ══ HERO ══ */
-#domov {
-  min-height:100vh; padding-top:60px;
-  position:relative; overflow:hidden;
-  background:var(--bg);
-}
-.hero-grid-container {
-  display:grid;
-  grid-template-columns:240px 1fr 340px;
-  grid-template-rows:60vh 30vh;
-  min-height:calc(100vh - 60px);
-  border-bottom:1px solid var(--border);
-}
-/* Left spine column */
-.hero-spine {
-  border-right:1px solid var(--border);
-  display:flex; flex-direction:column;
-  justify-content:space-between;
-  padding:2rem 1.5rem;
-  grid-row:span 2;
-}
-.hero-spine-label {
-  writing-mode:vertical-rl; transform:rotate(180deg);
-  font-family:'Unbounded',sans-serif; font-size:.5rem;
-  letter-spacing:4px; text-transform:uppercase;
-  color:var(--muted);
-}
-.hero-spine-num {
-  font-family:'Unbounded',sans-serif; font-size:.6rem;
-  color:var(--blue); text-align:center;
-}
-/* Centre hero text */
-.hero-centre {
-  padding:3.5rem 3rem;
-  display:flex; flex-direction:column; justify-content:flex-end;
-  border-bottom:1px solid var(--border);
-}
-.hero-tag-line {
-  font-family:'Unbounded',sans-serif; font-size:.55rem;
-  font-weight:300; letter-spacing:4px; text-transform:uppercase;
-  color:var(--blue); margin-bottom:2rem;
-}
-h1 {
-  font-family:'Unbounded',sans-serif; font-weight:900;
-  font-size:clamp(3rem,7.5vw,7.5rem);
-  line-height:.9; color:var(--text);
-  letter-spacing:-3px; margin-bottom:1rem;
-}
-h1 .blue { color:var(--blue); }
-h1 .thin {
-  font-weight:300; display:block;
-  font-size:.35em; letter-spacing:2px; color:var(--muted);
-  margin-bottom:.5rem; font-style:italic;
-}
-.hero-motto {
-  font-size:.8rem; color:var(--muted); font-style:italic;
-  line-height:1.8; margin-bottom:2.5rem;
-}
-.hero-ctas { display:flex; gap:0; }
-.hc-primary {
-  background:var(--blue); color:#fff;
-  font-family:'Unbounded',sans-serif; font-weight:700;
-  font-size:.55rem; letter-spacing:2px; text-transform:uppercase;
-  padding:14px 28px; text-decoration:none;
-  transition:.2s; display:inline-block;
-  border:1px solid var(--blue);
-}
-.hc-primary:hover { background:var(--blue2); }
-.hc-secondary {
-  border:1px solid var(--border); color:var(--muted);
-  font-family:'Unbounded',sans-serif; font-size:.55rem;
-  letter-spacing:2px; text-transform:uppercase;
-  padding:13px 24px; text-decoration:none;
-  transition:.2s; display:inline-block;
-}
-.hc-secondary:hover { border-color:var(--text); color:var(--text); }
-/* Right photo column */
-.hero-photo {
-  border-left:1px solid var(--border);
-  overflow:hidden; position:relative;
-  grid-row:span 2;
-}
-.hero-photo img {
-  width:100%; height:100%; object-fit:cover;
-  filter:grayscale(50%) contrast(1.1);
-  transition:.5s;
-}
-[data-theme="light"] .hero-photo img { filter:grayscale(20%); }
-.hero-photo:hover img { filter:grayscale(0%); }
-.hero-photo-strip {
-  position:absolute; bottom:0; left:0; right:0;
-  background:var(--blue); padding:.75rem 1.5rem;
-  display:flex; justify-content:space-between; align-items:center;
-}
-.hp-num { font-family:'Unbounded',sans-serif; font-size:1.5rem; font-weight:900; color:#fff; }
-.hp-lbl { font-size:.55rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.7); }
-/* Bottom stats row */
-.hero-bottom {
-  grid-column:2/3;
-  display:grid; grid-template-columns:repeat(4,1fr);
-  border-top:1px solid var(--border);
-}
-.hb-cell {
-  padding:1.5rem 2rem; border-right:1px solid var(--border);
-  display:flex; flex-direction:column; justify-content:center;
-  transition:.2s;
-}
-.hb-cell:last-child { border-right:none; }
-.hb-cell:hover { background:var(--blue-glow); }
-.hb-num { font-family:'Unbounded',sans-serif; font-size:1.6rem; font-weight:900; color:var(--blue); line-height:1; }
-.hb-lbl { font-size:.55rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:.4rem; }
-
-/* ══ SERVICES ══ */
-#sluzby { background:var(--bg2); }
-h2 {
-  font-family:'Unbounded',sans-serif; font-weight:900;
-  font-size:clamp(1.8rem,4vw,3.5rem); color:var(--text);
-  letter-spacing:-2px; line-height:1.05;
-}
-.svc-outer {
-  max-width:1520px; margin:0 auto; padding:0 2rem;
-  border-top:1px solid var(--border);
-}
-.svc-header-row {
-  display:grid; grid-template-columns:240px 1fr;
-  border-bottom:1px solid var(--border);
-  padding:3rem 2rem;
-  gap:3rem; align-items:start;
-}
-.svc-tag {
-  font-family:'Unbounded',sans-serif; font-size:.5rem;
-  letter-spacing:4px; text-transform:uppercase; color:var(--blue);
-  margin-bottom:.6rem; font-weight:300;
-}
-.svc-grid-inner { display:grid; grid-template-columns:repeat(3,1fr); border-left:1px solid var(--border); }
-.svc-g {
-  padding:2.5rem 2rem; border-right:1px solid var(--border);
-  border-bottom:1px solid var(--border); transition:.25s;
-}
-.svc-g:hover { background:var(--blue-glow); }
-.svc-g-num {
-  font-family:'Unbounded',sans-serif; font-size:.55rem; font-weight:300;
-  letter-spacing:2px; color:var(--blue); margin-bottom:1.25rem;
-}
-.svc-g h3 {
-  font-family:'Unbounded',sans-serif; font-size:.7rem; font-weight:700;
-  color:var(--text); margin-bottom:.75rem; letter-spacing:-.5px; line-height:1.3;
-}
-.svc-g p { font-size:.75rem; line-height:1.9; color:var(--muted); }
-
-/* ══ ABOUT ══ */
-#o-nas {
-  background:var(--bg3); border-top:1px solid var(--border);
-  padding:0;
-}
-.o-nas-inner {
-  max-width:1520px; margin:0 auto; padding:0 2rem;
-  display:grid; grid-template-columns:1fr 1fr;
-}
-.ao-img { overflow:hidden; position:relative; }
-.ao-img img { width:100%; height:100%; object-fit:cover; filter:grayscale(40%); transition:.5s; min-height:500px; }
-.ao-img:hover img { filter:grayscale(0%); }
-.ao-img::after {
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(135deg, var(--blue-glow), transparent 60%);
-}
-.ao-text {
-  padding:5rem 3rem; display:flex; flex-direction:column; justify-content:center;
-  border-left:1px solid var(--border);
-}
-.ao-text p { font-size:.82rem; line-height:2; color:var(--muted); margin-bottom:1rem; }
-.ao-facts { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--border); margin-top:2rem; }
-.af { padding:1.5rem; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
-.af:nth-child(even) { border-right:none; }
-.af:nth-last-child(-n+2) { border-bottom:none; }
-.af-v { font-family:'Unbounded',sans-serif; font-size:1.8rem; font-weight:900; color:var(--blue); line-height:1; }
-.af-l { font-size:.55rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:.3rem; }
-
-/* ══ GALLERY ══ */
-#galeria { background:var(--bg); border-top:1px solid var(--border); padding:5rem 0; }
-.galeria-inner { max-width:1520px; margin:0 auto; padding:0 2rem; }
-.g-header { padding:0 0 2.5rem; display:grid; grid-template-columns:240px 1fr; gap:2rem; }
-.gallery-swiss {
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1.5fr;
-  grid-template-rows:270px 190px;
-  gap:1px;
-  background:var(--border);
-}
-.gs { overflow:hidden; background:var(--bg2); }
-.gs:first-child { grid-row:span 2; }
-.gs:last-child { grid-row:span 2; }
-.gs img { width:100%; height:100%; object-fit:cover; transition:.5s; filter:saturate(.6); display:block; }
-.gs:hover img { filter:saturate(1.1) brightness(1.05); transform:scale(1.04); }
-
-/* ══ CONTACT ══ */
-#kontakt {
-  background:var(--bg2); border-top:1px solid var(--border);
-  min-height:500px;
-}
-.kontakt-inner {
-  max-width:1520px; margin:0 auto;
-  display:grid; grid-template-columns:240px 1fr 1fr;
-  min-height:500px;
-}
-.k-label-col {
-  border-right:1px solid var(--border); padding:3rem 1.5rem;
-  display:flex; flex-direction:column; justify-content:space-between;
-}
-.k-label-col .svc-tag { writing-mode:vertical-rl; transform:rotate(180deg); color:var(--blue); }
-.k-info { border-right:1px solid var(--border); padding:3rem; }
-.k-info h3 { font-family:'Unbounded',sans-serif; font-size:1rem; font-weight:900; color:var(--text); letter-spacing:-1px; margin-bottom:2rem; }
-.k-entry { padding:1rem 0; border-bottom:1px solid var(--border); display:flex; gap:1rem; align-items:flex-start; }
-.k-entry:first-of-type { border-top:1px solid var(--border); }
-.k-e-icon { color:var(--blue); font-size:.9rem; flex-shrink:0; margin-top:2px; }
-.k-e-lbl { font-size:.55rem; letter-spacing:2px; text-transform:uppercase; font-family:'Unbounded',sans-serif; color:var(--muted); margin-bottom:.2rem; }
-.k-e-val { font-size:.8rem; color:var(--text); }
-.k-e-val a { color:var(--text); text-decoration:none; }
-.k-e-val a:hover { color:var(--blue); }
-.k-form { padding:3rem; display:flex; flex-direction:column; gap:.75rem; justify-content:center; }
-.k-form h3 { font-family:'Unbounded',sans-serif; font-size:1rem; font-weight:900; color:var(--text); letter-spacing:-1px; margin-bottom:1rem; }
-.kfg label { display:block; font-family:'Unbounded',sans-serif; font-size:.5rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:.3rem; }
-.kfg input, .kfg textarea {
-  width:100%; background:var(--bg3);
-  border:1px solid var(--border); color:var(--text);
-  font-family:'Epilogue',sans-serif; font-size:.8rem;
-  padding:10px 14px; outline:none; transition:.2s;
-}
-.kfg input:focus, .kfg textarea:focus { border-color:var(--blue); background:var(--bg); }
-.kfg textarea { min-height:90px; resize:vertical; }
-.kfg input::placeholder, .kfg textarea::placeholder { color:var(--muted); font-size:.75rem; }
-.kfr { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
-
-footer {
-  background:var(--bg3); border-top:1px solid var(--border);
-  display:grid; grid-template-columns:240px 1fr 240px;
-  align-items:center; padding:1.25rem 2rem;
-  font-family:'Unbounded',sans-serif; font-size:.5rem;
-  letter-spacing:2px; text-transform:uppercase; color:var(--muted);
-}
-footer span:nth-child(2) { text-align:center; }
-footer span:last-child { text-align:right; }
-
-@media(max-width:900px){
-  nav { grid-template-columns:1fr 1fr; }
-  nav ul { display:none; }
-  .nav-actions { border-left:none; }
-  .hero-grid-container {
-    grid-template-columns:1fr;
-    grid-template-rows:auto auto auto;
-    min-height:auto;
-    gap:0;
+@media(max-width:900px) {
+  /* 1. Force the container to never exceed the screen width */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  .hero-spine { display:none; }
-  .hero-centre { grid-column:1; border-bottom:1px solid var(--border); }
-  .hero-photo { height:200px; grid-row:auto; grid-column:1; border-left:none; }
-  .hero-bottom { grid-column:1; grid-template-columns:1fr 1fr; }
-  .svc-header-row { grid-template-columns:1fr; }
-  .svc-grid-inner { grid-template-columns:1fr 1fr; border-left:none; }
-  .o-nas-inner { grid-template-columns:1fr; }
-  .ao-img { height:260px; }
-  .gallery-swiss { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
-  .gs:first-child,.gs:last-child { grid-row:span 1; height:180px; }
-  .kontakt-inner { grid-template-columns:1fr; }
-  .k-label-col { display:none; }
-  footer { grid-template-columns:1fr; gap:.5rem; }
-  footer span:nth-child(2), footer span:last-child { text-align:left; }
-}
-@media(max-width:768px){
-  nav { padding:0 1rem; box-sizing:border-box; max-width:100%; grid-template-columns:1fr auto; }
-  .logo { padding:0 1rem; font-size:.75rem; border-right:none; }
-  nav ul { display:none; }
-  .nav-actions { padding:0 .5rem; gap:.5rem; }
-  .nav-actions .tm { display:flex; align-items:center; justify-content:center; }
-  .nav-tel-sm { font-size:.7rem; }
-  .hero-grid-container {
-    padding:1.5rem 1rem 2rem;
-    max-width:100%;
-    overflow:hidden;
+
+  /* 2. Fix Navigation - Remove all fixed pixel widths */
+  nav {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    width: 100% !important;
+    padding: 0 15px !important;
+    grid-template-columns: none !important; /* Kill the grid */
   }
-  .hero-centre { padding:2rem 1rem; }
-  .hero-tag-line { font-size:.55rem; }
-  .hero-centre h1 { font-size:clamp(1.75rem,8vw,3rem); word-break:break-word; overflow-wrap:break-word; }
-  .hero-motto { font-size:.65rem; max-width:100%; }
-  .hero-ctas { flex-direction:column; width:100%; }
-  .hc-primary, .hc-secondary { width:100%; box-sizing:border-box; text-align:center; }
-  .hero-bottom { grid-column:1; grid-template-columns:1fr; padding:1rem; gap:1rem; }
-  .hero-photo { height:220px; grid-column:1; border-left:none; }
-  #sluzby { padding:3rem 1rem; }
-  .svc-grid-inner { grid-template-columns:1fr; }
-  .svc-header-row { padding:0 1rem; }
-  .o-nas-inner, .gallery-swiss, .kontakt-inner { padding:0 1rem; }
-  .gs:first-child, .gs:last-child { height:160px; }
+
+  .logo {
+    border: none !important;
+    padding: 0 !important;
+    width: auto !important;
+  }
+
+  nav ul {
+    display: none !important;
+  }
+
+  .nav-actions {
+    border: none !important;
+    padding: 0 !important;
+    width: auto !important;
+  }
+
+  /* 3. Fix Hero Section - The "H1" is usually what breaks the width */
+  .hero-grid-container {
+    display: block !important; /* Switch from Grid to Block */
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .hero-centre {
+    width: 100% !important;
+    padding: 100px 20px 40px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+  }
+
+  /* CRITICAL: Scale down the text so it fits small screens */
+  h1 {
+    font-size: 2.2rem !important; /* Much smaller to prevent overflow */
+    line-height: 1.1 !important;
+    word-break: break-word !important;
+    width: 100% !important;
+  }
+
+  .hero-motto {
+    font-size: 0.8rem !important;
+    width: 100% !important;
+  }
+
+  /* 4. Fix the Stats/Bottom Cells */
+  .hero-bottom {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* 2x2 grid */
+    width: 100% !important;
+  }
+
+  .hb-cell {
+    border-right: 1px solid var(--border) !important;
+    border-top: 1px solid var(--border) !important;
+    padding: 20px !important;
+  }
+
+  /* 5. Fix Services & Contact */
+  .svc-grid-inner, .o-nas-inner, .kontakt-inner, .gallery-swiss {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .svc-g, .ao-text, .k-info, .k-form {
+    width: 100% !important;
+    border-right: none !important;
+    padding: 30px 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 6. Fix Footer */
+  footer {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    width: 100% !important;
+    padding: 20px !important;
+    gap: 10px;
+  }
+
+  /* 7. The Grid Overlay Fix */
+  body::before {
+    width: 100% !important;
+    background-size: 40px 40px !important; /* Smaller grid for mobile */
+  }
 }
-</style>
+
+
+    
+
+    [data-theme="dark"] {
+      --bg: #040810;
+      --bg2: #080d18;
+      --bg3: #0c1220;
+      --surface: #10182a;
+      --border: rgba(255, 255, 255, .07);
+      --blue: #0070ff;
+      --blue2: #0050cc;
+      --blue-glow: rgba(0, 112, 255, .15);
+      --bone: #f8f4ec;
+      --text: #c8d4f0;
+      --muted: #4a5880;
+      --inv-bg: #f0ecf8;
+      --inv-text: #040810;
+    }
+
+    [data-theme="light"] {
+      --bg: #f0ecf8;
+      --bg2: #e8e4f4;
+      --bg3: #ddd8ee;
+      --surface: #ffffff;
+      --border: rgba(0, 0, 0, .1);
+      --blue: #0055cc;
+      --blue2: #003899;
+      --blue-glow: rgba(0, 85, 204, .08);
+      --bone: #040810;
+      --text: #1a1c30;
+      --muted: #6070a0;
+      --inv-bg: #040810;
+      --inv-text: #f0ecf8;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Epilogue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .4s, color .4s;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--blue);
+    }
+
+    /* Subtle grid overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: .4;
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      height: 60px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .85rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: 1px;
+      padding: 0 2rem;
+      border-right: 1px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo em {
+      color: var(--blue);
+      font-style: normal;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    nav ul li a {
+      display: block;
+      padding: 0 1.25rem;
+      height: 60px;
+      line-height: 60px;
+      font-family: 'Unbounded', sans-serif;
+      font-size: .55rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: .2s;
+    }
+
+    nav ul li a:hover {
+      color: var(--text);
+    }
+
+    .nav-actions {
+      height: 60px;
+      border-left: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: .75rem;
+      padding: 0 1.5rem;
+    }
+
+    .nav-tel-sm {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .55rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    .nav-tel-sm:hover {
+      color: var(--text);
+    }
+
+    .tm {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      color: var(--text);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s;
+      border-radius: 4px;
+    }
+
+    .tm:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    /* ══ HERO ══ */
+    #domov {
+      min-height: 100vh;
+      padding-top: 60px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero-grid-container {
+      display: grid;
+      grid-template-columns: 240px 1fr 340px;
+      grid-template-rows: 60vh 30vh;
+      min-height: calc(100vh - 60px);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-grid-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("https://www.iveco.com/au/-/media/IVECOdotcom/Content/Products/E-Daily/version-banner/eDAILY_VAN_alternative.jpg?h=1080&iar=0&w=1920&rev=-1") center/cover no-repeat;
+      filter: grayscale(30%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* FIX: READABILITY OVERLAY */
+    .hero-grid-container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* Gradient that fades from solid background color to transparent */
+      background: linear-gradient(to right, var(--bg) 0%, var(--bg) 40%, transparent 100%);
+      backdrop-filter: blur(2px);
+      opacity: 0.9;
+      z-index: -1;
+      pointer-events: none;
+      transition: background 0.4s;
+    }
+
+    .hero-spine {
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem 1.5rem;
+      grid-row: span 2;
+    }
+
+    .hero-spine-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Unbounded', sans-serif;
+      font-size: .5rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-spine-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .6rem;
+      color: var(--blue);
+      text-align: center;
+    }
+
+    .hero-centre {
+      padding: 3.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag-line {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .55rem;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 7.5vw, 7.5rem);
+      line-height: .9;
+      color: var(--text);
+      letter-spacing: -3px;
+      margin-bottom: 1rem;
+    }
+
+    h1 .blue {
+      color: var(--blue);
+    }
+
+    h1 .thin {
+      font-weight: 300;
+      display: block;
+      font-size: .35em;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: .5rem;
+      font-style: italic;
+    }
+
+    .hero-motto {
+      font-size: .85rem;
+      color: var(--text);
+      font-style: italic;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 0;
+    }
+
+    .hc-primary {
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 700;
+      font-size: .55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      text-decoration: none;
+      transition: .2s;
+      display: inline-block;
+      border: 1px solid var(--blue);
+    }
+
+    .hc-primary:hover {
+      background: var(--blue2);
+    }
+
+    .hc-secondary {
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Unbounded', sans-serif;
+      font-size: .55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px 24px;
+      text-decoration: none;
+      transition: .2s;
+      display: inline-block;
+    }
+
+    .hc-secondary:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    .hero-photo {
+      border-left: 1px solid var(--border);
+      position: relative;
+      grid-row: span 2;
+      min-height: 100%;
+    }
+
+    .hero-photo-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--blue);
+      padding: .75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hp-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .hp-lbl {
+      font-size: .55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .7);
+    }
+
+    .hero-bottom {
+      grid-column: 2/3;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+
+    .hb-cell {
+      padding: 1.5rem 2rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: .2s;
+    }
+
+    .hb-cell:last-child {
+      border-right: none;
+    }
+
+    .hb-cell:hover {
+      background: var(--blue-glow);
+    }
+
+    .hb-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .hb-lbl {
+      font-size: .55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+
+    /* ══ SERVICES ══ */
+    #sluzby {
+      background: var(--bg2);
+      padding: 4rem 0;
+    }
+
+    h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      color: var(--text);
+      letter-spacing: -2px;
+      line-height: 1.05;
+    }
+
+    .svc-outer {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .svc-header-row {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .svc-tag {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .5rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: .6rem;
+      font-weight: 300;
+    }
+
+    .svc-grid-inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-left: 1px solid var(--border);
+    }
+
+    .svc-g {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: .25s;
+    }
+
+    .svc-g:hover {
+      background: var(--blue-glow);
+    }
+
+    .svc-g-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .55rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--blue);
+      margin-bottom: 1.25rem;
+    }
+
+    .svc-g h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: .75rem;
+      letter-spacing: -.5px;
+      line-height: 1.3;
+    }
+
+    .svc-g p {
+      font-size: .75rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    /* ══ ABOUT ══ */
+    #o-nas {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .o-nas-inner {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .ao-img {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ao-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%);
+      transition: .5s;
+      min-height: 500px;
+    }
+
+    .ao-img:hover img {
+      filter: grayscale(0%);
+    }
+
+    .ao-text {
+      padding: 5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid var(--border);
+    }
+
+    .ao-text p {
+      font-size: .82rem;
+      line-height: 2;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .ao-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .af {
+      padding: 1.5rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .af:nth-child(even) {
+      border-right: none;
+    }
+
+    .af:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    .af-v {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .af-l {
+      font-size: .55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .3rem;
+    }
+
+    /* ══ GALLERY ══ */
+    #galeria {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 5rem 0;
+    }
+
+    .galeria-inner {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .g-header {
+      padding: 0 0 2.5rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2rem;
+    }
+
+    .gallery-swiss {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      grid-template-rows: 270px 190px;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .gs {
+      overflow: hidden;
+      background: var(--bg2);
+    }
+
+    .gs:first-child {
+      grid-row: span 2;
+    }
+
+    .gs:last-child {
+      grid-row: span 2;
+    }
+
+    .gs img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .5s;
+      filter: saturate(.6);
+      display: block;
+    }
+
+    .gs:hover img {
+      filter: saturate(1.1) brightness(1.05);
+      transform: scale(1.04);
+    }
+
+    /* ══ CONTACT ══ */
+    #kontakt {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .kontakt-inner {
+      max-width: 1520px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 240px 1fr 1fr;
+      min-height: 500px;
+    }
+
+    .k-label-col {
+      border-right: 1px solid var(--border);
+      padding: 3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .k-label-col .svc-tag {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: var(--blue);
+    }
+
+    .k-info {
+      border-right: 1px solid var(--border);
+      padding: 3rem;
+    }
+
+    .k-info h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin-bottom: 2rem;
+    }
+
+    .k-entry {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .k-entry:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .k-e-icon {
+      color: var(--blue);
+      font-size: .9rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .k-e-lbl {
+      font-size: .55rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'Unbounded', sans-serif;
+      color: var(--muted);
+      margin-bottom: .2rem;
+    }
+
+    .k-e-val {
+      font-size: .8rem;
+      color: var(--text);
+    }
+
+    .k-e-val a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .k-e-val a:hover {
+      color: var(--blue);
+    }
+
+    .k-form {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      justify-content: center;
+    }
+
+    .k-form h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .kfg label {
+      display: block;
+      font-family: 'Unbounded', sans-serif;
+      font-size: .5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .3rem;
+    }
+
+    .kfg input,
+    .kfg textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Epilogue', sans-serif;
+      font-size: .8rem;
+      padding: 10px 14px;
+      outline: none;
+      transition: .2s;
+    }
+
+    .kfg input:focus,
+    .kfg textarea:focus {
+      border-color: var(--blue);
+      background: var(--bg);
+    }
+
+    .kfg textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    footer {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 240px 1fr 240px;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      font-family: 'Unbounded', sans-serif;
+      font-size: .5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    @media(max-width:900px) {
+      nav {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .hero-grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+      }
+
+      .hero-grid-container::after {
+        background: var(--bg);
+        opacity: 0.85;
+      }
+
+      .hero-spine {
+        display: none;
+      }
+
+      .hero-centre {
+        grid-column: 1;
+      }
+
+      .hero-photo {
+        height: 200px;
+        grid-column: 1;
+      }
+
+      .hero-bottom {
+        grid-column: 1;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .svc-header-row {
+        grid-template-columns: 1fr;
+      }
+
+      .svc-grid-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .o-nas-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .ao-img {
+        height: 260px;
+      }
+
+      .gallery-swiss {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .kontakt-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .k-label-col {
+        display: none;
+      }
+
+      footer {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+        text-align: left;
+      }
+
+
+
+
+
+
+
+
+      
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo">auto<em>scelem</em></div>
-  <ul>
-    <li><a href="#domov">Domov</a></li>
-    <li><a href="#sluzby">Služby</a></li>
-    <li><a href="#o-nas">O nás</a></li>
-    <li><a href="#galeria">Galeria</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
-  <div class="nav-actions">
-    <a href="tel:+420608800504" class="nav-tel-sm">+420 608 800 504</a>
-    <button class="tm" onclick="toggleTheme()">◑</button>
-  </div>
-</nav>
-
-<section id="domov">
-  <div class="hero-grid-container">
-    <div class="hero-spine">
-      <div class="hero-spine-label">autoscelem · autodoprava · vladimír jerie</div>
-      <div class="hero-spine-num">01<br>—<br>05</div>
+  <nav>
+    <div class="logo">auto<em>scelem</em></div>
+    <ul>
+      <li><a href="#domov">Domov</a></li>
+      <li><a href="#sluzby">Služby</a></li>
+      <li><a href="#o-nas">O nás</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:+420608800504" class="nav-tel-sm">+420 608 800 504</a>
+      <button class="tm" onclick="toggleTheme()">◑</button>
     </div>
-    <div class="hero-centre">
-      <div class="hero-tag-line">Autodoprava Vladimír Jerie — ČR & Európa</div>
-      <h1>
-        <span class="thin">Spoľahlivá preprava</span>
-        AUTO<span class="blue">SCE</span>LEM
-      </h1>
-      <p class="hero-motto">„Přivezeme, odvezeme — všechno, všude, včas."<br>Moderná flotila · GPS monitoring · 24/7 dostupnosť</p>
-      <div class="hero-ctas">
-        <a href="#kontakt" class="hc-primary">→ Objednať prepravu</a>
-        <a href="#sluzby" class="hc-secondary">Pozrieť služby</a>
+  </nav>
+
+  <section id="domov">
+    <div class="hero-grid-container">
+      <div class="hero-spine">
+        <div class="hero-spine-label">autoscelem · autodoprava · vladimír jerie</div>
+        <div class="hero-spine-num">01<br>—<br>05</div>
+      </div>
+      <div class="hero-centre">
+        <div class="hero-tag-line">Autodoprava Vladimír Jerie — ČR & Európa</div>
+        <h1>
+          <span class="thin">Spoľahlivá preprava</span>
+          AUTO<span class="blue">SCE</span>LEM
+        </h1>
+        <p class="hero-motto">„Přivezeme, odvezeme — všechno, všude, včas."<br>Moderná flotila · GPS monitoring · 24/7
+          dostupnosť</p>
+        <div class="hero-ctas">
+          <a href="#kontakt" class="hc-primary">→ Objednať prepravu</a>
+          <a href="#sluzby" class="hc-secondary">Pozrieť služby</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="hero-photo-strip">
+          <div>
+            <div class="hp-num">24/7</div>
+            <div class="hp-lbl">Dostupnosť</div>
+          </div>
+          <div style="text-align:right">
+            <div class="hp-num">EU</div>
+            <div class="hp-lbl">Pôsobnosť</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-bottom">
+        <div class="hb-cell">
+          <div class="hb-num">15+</div>
+          <div class="hb-lbl">Rokov praxe</div>
+        </div>
+        <div class="hb-cell">
+          <div class="hb-num">500+</div>
+          <div class="hb-lbl">Zákazníci</div>
+        </div>
+        <div class="hb-cell">
+          <div class="hb-num">100%</div>
+          <div class="hb-lbl">Poistenie</div>
+        </div>
+        <div class="hb-cell">
+          <div class="hb-num">EU</div>
+          <div class="hb-lbl">Medzinárodne</div>
+        </div>
       </div>
     </div>
-    <div class="hero-photo">
-      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1000&q=80" alt="Transport">
-      <div class="hero-photo-strip">
-        <div><div class="hp-num">24/7</div><div class="hp-lbl">Dostupnosť</div></div>
-        <div style="text-align:right"><div class="hp-num">EU</div><div class="hp-lbl">Pôsobnosť</div></div>
+  </section>
+
+  <section id="sluzby">
+    <div class="svc-outer">
+      <div class="svc-header-row">
+        <div>
+          <div class="svc-tag">// Ponuka</div>
+          <h2>Naše<br>Služby</h2>
+        </div>
+        <p style="font-size:.82rem;line-height:1.9;color:var(--muted);max-width:500px;">Od lokálnej prepravy po
+          nadrozmerné európske náklady — komplexné riešenia pre každý dopravný požiadavok.</p>
+      </div>
+      <div class="svc-grid-inner">
+        <div class="svc-g">
+          <div class="svc-g-num">— 01</div>
+          <h3>Vnútroštátna preprava</h3>
+          <p>Celá ČR, expresné doručenie, flexibilné termíny.</p>
+        </div>
+        <div class="svc-g">
+          <div class="svc-g-num">— 02</div>
+          <h3>Medzinárodná preprava</h3>
+          <p>Európa, colná dokumentácia, GPS tracking.</p>
+        </div>
+        <div class="svc-g">
+          <div class="svc-g-num">— 03</div>
+          <h3>Sťahovanie</h3>
+          <p>Domácnosti, kancelárie, firmy — s plnou starostlivosťou.</p>
+        </div>
+        <div class="svc-g">
+          <div class="svc-g-num">— 04</div>
+          <h3>Nadrozmerné náklady</h3>
+          <p>Špeciálna technika, povolenia, bezpečný prevoz.</p>
+        </div>
+        <div class="svc-g">
+          <div class="svc-g-num">— 05</div>
+          <h3>Stavebná logistika</h3>
+          <p>Zásobovanie stavenisk, materiál, stroje.</p>
+        </div>
+        <div class="svc-g">
+          <div class="svc-g-num">— 06</div>
+          <h3>Expresná doprava</h3>
+          <p>Urgentné prevozy 24/7 — okamžitá reakcia.</p>
+        </div>
       </div>
     </div>
-    <div class="hero-bottom">
-      <div class="hb-cell"><div class="hb-num">15+</div><div class="hb-lbl">Rokov praxe</div></div>
-      <div class="hb-cell"><div class="hb-num">500+</div><div class="hb-lbl">Zákazníci</div></div>
-      <div class="hb-cell"><div class="hb-num">100%</div><div class="hb-lbl">Poistenie</div></div>
-      <div class="hb-cell"><div class="hb-num">EU</div><div class="hb-lbl">Medzinárodne</div></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="sluzby">
-  <div class="svc-outer">
-    <div class="svc-header-row">
-      <div>
-        <div class="svc-tag">// Ponuka</div>
-        <h2>Naše<br>Služby</h2>
+  <section id="o-nas">
+    <div class="o-nas-inner">
+      <div class="ao-img">
+        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Flotila autoscelem">
       </div>
-      <p style="font-size:.82rem;line-height:1.9;color:var(--muted);max-width:500px;">Od lokálnej prepravy po nadrozmerné európske náklady — komplexné riešenia pre každý dopravný požiadavok.</p>
+      <div class="ao-text">
+        <div class="svc-tag">// O spoločnosti</div>
+        <h2>autoscelem<br>& Vladimír Jerie</h2>
+        <br>
+        <p>autoscelem je česká dopravná firma s ľudskou tvárou a systémovým prístupom. Vladimír Jerie stojí osobne za
+          každou zákazkou, čo je niečo, čo veľké firmy ponúknuť nedokážu.</p>
+        <p>Naša flotila vozidiel je moderná, GPS-monitorovaná a plne poistená. Vodiči sú profesionáli s dlhoročnou
+          praxou na európskych trasách.</p>
+        <div class="ao-facts">
+          <div class="af">
+            <div class="af-v">15+</div>
+            <div class="af-l">Rokov praxe</div>
+          </div>
+          <div class="af">
+            <div class="af-v">500+</div>
+            <div class="af-l">Zákazníci</div>
+          </div>
+          <div class="af">
+            <div class="af-v">EU</div>
+            <div class="af-l">Pôsobnosť</div>
+          </div>
+          <div class="af">
+            <div class="af-v">24/7</div>
+            <div class="af-l">Dostupnosť</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="svc-grid-inner">
-      <div class="svc-g"><div class="svc-g-num">— 01</div><h3>Vnútroštátna preprava</h3><p>Celá ČR, expresné doručenie, flexibilné termíny.</p></div>
-      <div class="svc-g"><div class="svc-g-num">— 02</div><h3>Medzinárodná preprava</h3><p>Európa, colná dokumentácia, GPS tracking.</p></div>
-      <div class="svc-g"><div class="svc-g-num">— 03</div><h3>Sťahovanie</h3><p>Domácnosti, kancelárie, firmy — s plnou starostlivosťou.</p></div>
-      <div class="svc-g"><div class="svc-g-num">— 04</div><h3>Nadrozmerné náklady</h3><p>Špeciálna technika, povolenia, bezpečný prevoz.</p></div>
-      <div class="svc-g"><div class="svc-g-num">— 05</div><h3>Stavebná logistika</h3><p>Zásobovanie stavenisk, materiál, stroje.</p></div>
-      <div class="svc-g"><div class="svc-g-num">— 06</div><h3>Expresná doprava</h3><p>Urgentné prevozy 24/7 — okamžitá reakcia.</p></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="o-nas">
-  <div class="o-nas-inner">
-  <div class="ao-img">
-    <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Flotila autoscelem">
-  </div>
-  <div class="ao-text">
-    <div class="svc-tag">// O spoločnosti</div>
-    <h2>autoscelem<br>& Vladimír Jerie</h2>
-    <br>
-    <p>autoscelem je česká dopravná firma s ľudskou tvárou a systémovým prístupom. Vladimír Jerie stojí osobne za každou zákazkou, čo je niečo, čo veľké firmy ponúknuť nedokážu.</p>
-    <p>Naša flotila vozidiel je moderná, GPS-monitorovaná a plne poistená. Vodiči sú profesionáli s dlhoročnou praxou na európskych trasách.</p>
-    <div class="ao-facts">
-      <div class="af"><div class="af-v">15+</div><div class="af-l">Rokov praxe</div></div>
-      <div class="af"><div class="af-v">500+</div><div class="af-l">Zákazníci</div></div>
-      <div class="af"><div class="af-v">EU</div><div class="af-l">Pôsobnosť</div></div>
-      <div class="af"><div class="af-v">24/7</div><div class="af-l">Dostupnosť</div></div>
+  <section id="galeria">
+    <div class="galeria-inner">
+      <div class="g-header">
+        <div>
+          <div class="svc-tag">// Galeria</div>
+          <h2>Naša<br>Práca</h2>
+        </div>
+        <p style="font-size:.8rem;line-height:1.9;color:var(--muted);align-self:end;">Flotila a realizované prevozy.</p>
+      </div>
+      <div class="gallery-swiss">
+        <div class="gs"><img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=900&q=80"
+            alt="Flotila"></div>
+        <div class="gs"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Logistika">
+        </div>
+        <div class="gs"><img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=500&q=80" alt="Sklad">
+        </div>
+        <div class="gs"><img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=700&q=80"
+            alt="Transport"></div>
+        <div class="gs"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=500&q=80" alt="Cesta">
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="kontakt-inner">
+      <div class="k-label-col">
+        <div class="svc-tag">// Kontakt</div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:.6rem;color:var(--muted);">autoscelem<br>.com</div>
+      </div>
+      <div class="k-info">
+        <h3>Kontaktné<br>Informácie</h3>
+        <div class="k-entry">
+          <div class="k-e-icon">📞</div>
+          <div>
+            <div class="k-e-lbl">Telefón</div>
+            <div class="k-e-val"><a href="tel:+420608800504">+420 608 800 504</a></div>
+          </div>
+        </div>
+        <div class="k-entry">
+          <div class="k-e-icon">🌐</div>
+          <div>
+            <div class="k-e-lbl">Web</div>
+            <div class="k-e-val"><a href="http://autoscelem.com">autoscelem.com</a></div>
+          </div>
+        </div>
+        <div class="k-entry">
+          <div class="k-e-icon">📍</div>
+          <div>
+            <div class="k-e-lbl">Pôsobnosť</div>
+            <div class="k-e-val">ČR & celá Európa</div>
+          </div>
+        </div>
+        <div class="k-entry">
+          <div class="k-e-icon">⏰</div>
+          <div>
+            <div class="k-e-lbl">Dostupnosť</div>
+            <div class="k-e-val">24/7 non-stop</div>
+          </div>
+        </div>
+      </div>
+      <div class="k-form">
+        <h3>Poptávkový<br>Formulár</h3>
+        <div class="kfr">
+          <div class="kfg"><label>Meno</label><input placeholder="Vaše meno"></div>
+          <div class="kfg"><label>Telefón</label><input placeholder="+420..."></div>
+        </div>
+        <div class="kfg"><label>E-mail</label><input placeholder="email@example.com"></div>
+        <div class="kfg"><label>Trasa</label><input placeholder="Odkiaľ → Kam"></div>
+        <div class="kfg"><label>Správa</label><textarea placeholder="Náklad, termín, poznámky..."></textarea></div>
+        <button class="hc-primary" style="width:100%;border:none;cursor:pointer;">Odoslať dopyt →</button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="galeria">
-  <div class="galeria-inner">
-  <div class="g-header">
-    <div>
-      <div class="svc-tag">// Galeria</div>
-      <h2>Naša<br>Práca</h2>
-    </div>
-    <p style="font-size:.8rem;line-height:1.9;color:var(--muted);align-self:end;">Flotila a realizované prevozy.</p>
-  </div>
-  <div class="gallery-swiss">
-    <div class="gs"><img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=900&q=80" alt="Flotila"></div>
-    <div class="gs"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Logistika"></div>
-    <div class="gs"><img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=500&q=80" alt="Sklad"></div>
-    <div class="gs"><img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=700&q=80" alt="Transport"></div>
-    <div class="gs"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=500&q=80" alt="Cesta"></div>
-  </div>
-  </div>
-</section>
+  <footer>
+    <span>© 2024 autoscelem</span>
+    <span>Vladimír Jerie · Autodoprava</span>
+    <span>+420 608 800 504</span>
+  </footer>
 
-<section id="kontakt">
-  <div class="kontakt-inner">
-  <div class="k-label-col">
-    <div class="svc-tag">// Kontakt</div>
-    <div style="font-family:'Unbounded',sans-serif;font-size:.6rem;color:var(--muted);">autoscelem<br>.com</div>
-  </div>
-  <div class="k-info">
-    <h3>Kontaktné<br>Informácie</h3>
-    <div class="k-entry"><div class="k-e-icon">📞</div><div><div class="k-e-lbl">Telefón</div><div class="k-e-val"><a href="tel:+420608800504">+420 608 800 504</a></div></div></div>
-    <div class="k-entry"><div class="k-e-icon">🌐</div><div><div class="k-e-lbl">Web</div><div class="k-e-val"><a href="http://autoscelem.com">autoscelem.com</a></div></div></div>
-    <div class="k-entry"><div class="k-e-icon">📍</div><div><div class="k-e-lbl">Pôsobnosť</div><div class="k-e-val">ČR & celá Európa</div></div></div>
-    <div class="k-entry"><div class="k-e-icon">⏰</div><div><div class="k-e-lbl">Dostupnosť</div><div class="k-e-val">24/7 non-stop</div></div></div>
-  </div>
-  <div class="k-form">
-    <h3>Poptávkový<br>Formulár</h3>
-    <div class="kfr">
-      <div class="kfg"><label>Meno</label><input placeholder="Vaše meno"></div>
-      <div class="kfg"><label>Telefón</label><input placeholder="+420..."></div>
-    </div>
-    <div class="kfg"><label>E-mail</label><input placeholder="email@example.com"></div>
-    <div class="kfg"><label>Trasa</label><input placeholder="Odkiaľ → Kam"></div>
-    <div class="kfg"><label>Správa</label><textarea placeholder="Náklad, termín, poznámky..."></textarea></div>
-    <button class="hc-primary" style="width:100%;border:none;cursor:pointer;">Odoslať dopyt →</button>
-  </div>
-  </div>
-</section>
-
-<footer>
-  <span>© 2024 autoscelem</span>
-  <span>Vladimír Jerie · Autodoprava</span>
-  <span>+420 608 800 504</span>
-</footer>
-
-<script>
-function toggleTheme(){
-  const h=document.documentElement;
-  h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
-}
-(function(){
-  function copyTel(e){
-    var a=e.target.closest('a[href^="tel:"]');
-    if(!a)return;
-    var num=(a.getAttribute('href')||'').replace(/^tel:/i,'').trim();
-    if(num&&navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(num).then(function(){
-        var t=document.getElementById('tel-toast');
-        if(t)t.remove();
-        t=document.createElement('span');
-        t.id='tel-toast';
-        t.textContent='Číslo skopírované';
-        t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:8px 16px;border-radius:4px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
-        document.body.appendChild(t);
-        setTimeout(function(){if(t.parentNode)t.remove();},2500);
-      });
+  <script>
+    function toggleTheme() {
+      const h = document.documentElement;
+      h.setAttribute('data-theme', h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     }
-  }
-  document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
-})();
-</script>
-<style>@keyframes telFadeOut{to{opacity:0;}}</style>
+  </script>
 </body>
+
 </html>
