@@ -76,11 +76,13 @@ nav ul a:hover { color:var(--text); border-bottom-color:var(--teal); }
 .nav-tel { font-size:.7rem; color:var(--teal); text-decoration:none; letter-spacing:1px; }
 .nav-tel:hover { color:var(--copper); }
 .toggle {
-  width:32px; height:32px; border:1px solid var(--teal);
+  width:36px; height:36px; border:2.5px solid var(--teal);
   background:transparent; color:var(--teal); cursor:pointer;
-  font-size:.85rem; display:flex; align-items:center; justify-content:center;
+  font-size:1.25rem; display:flex; align-items:center; justify-content:center;
+  padding:0; line-height:1; letter-spacing:0;
   transition:.2s; border-radius:50%;
 }
+.toggle-icon { display:block; transform:translateX(1px); }
 .toggle:hover { background:var(--teal); color:var(--bg); }
 
 /* ══ HERO ══ */
@@ -336,7 +338,7 @@ footer {
   </ul>
   <div class="nav-r">
     <a href="tel:+420608800504" class="nav-tel">+420 608 800 504</a>
-    <button class="toggle" onclick="toggleTheme()">◑</button>
+    <button class="toggle" onclick="toggleTheme()"><span class="toggle-icon">◑</span></button>
   </div>
 </nav>
 

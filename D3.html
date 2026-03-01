@@ -28,7 +28,7 @@ body{
 .wrap{max-width:1180px;margin:0 auto;padding:0 56px;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--pine);height:66px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--pine);height:66px;border-bottom:3px solid var(--clay);}
 .nav-inner{
   max-width:1180px;margin:0 auto;padding:0 56px;
   height:100%;display:flex;align-items:center;justify-content:space-between;
@@ -54,10 +54,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--pine);heigh
   display:grid;grid-template-columns:1.1fr 0.9fr;gap:0;
   position:relative;z-index:2;
 }
-/* diagonal stripe in background, full-bleed */
+/* diagonal stripe — full height like clay-stripe on the right */
 .hero-diag{
   position:absolute;top:0;bottom:0;
-  left:calc(50% - 4px);width:8px;
+  left:calc(50% + 155px);width:8px;
   background:var(--rust);
   transform:skewX(-6deg);z-index:3;
   pointer-events:none;
@@ -105,19 +105,19 @@ h1 .accent{color:var(--clay);display:block;transform:skewX(-3deg);}
   background:linear-gradient(to right,var(--pine) 0%,transparent 30%);
 }
 .clay-stripe{
-  position:absolute;top:0;bottom:0;left:14%;width:5px;
+  position:absolute;top:0;bottom:0;left:30%;width:5px;
   background:var(--clay);opacity:.6;z-index:1;transform:skewX(-6deg);
 }
 
-/* STATS — full bleed rust, skewed */
-.stats-section{overflow:hidden;}
+/* STATS — full bleed rust, straight bar (no skew) so hero bottom meets bar cleanly */
+.stats-section{overflow:visible;}
 .stats-row{
-  background:var(--rust);
-  transform:skewY(-1.5deg);margin:-2px 0;position:relative;z-index:5;
+  background:var(--clay);
+  position:relative;z-index:5;
+  border-top:2px solid var(--clay);
 }
 .stats-inner{
   max-width:1180px;margin:0 auto;padding:0 56px;
-  transform:skewY(1.5deg);
   display:grid;grid-template-columns:repeat(4,1fr);
 }
 .stat{padding:40px 24px;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
@@ -272,7 +272,7 @@ footer{background:var(--darkpine);padding:26px 0;}
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-eyebrow">// Autodoprava — ČR · SR · EU</div>
-      <h1>PRIVEDIEME<br><span class="accent">ODVEDIEME</span><br>VŠETKO</h1>
+      <h1>PRIVEZEME<br><span class="accent">ODVEZEME</span><br>VŠETKO</h1>
       <p class="hero-sub">Profesionálna nákladná doprava Vladimír Jerie. Spoľahlivosť, presnosť a osobný prístup ku každej zákazke. Kdekoľvek, kedykoľvek.</p>
       <a href="#contact" class="hero-btn"><span>NEZÁVÄZNÁ PONUKA</span></a>
     </div>
@@ -334,7 +334,7 @@ footer{background:var(--darkpine);padding:26px 0;}
           <span class="sub">// Kto sme</span>
           O FIRME
         </h2>
-        <div class="about-pull">"Privedieme, odvedieme — všetko, všade, včas!"</div>
+        <div class="about-pull">"Privezieme, odvezieme — všetko, všade, včas!"</div>
         <p class="about-p">Vladimír Jerie prevádzkuje autodopravnú spoločnosť s dlhoročnými skúsenosťami v oblasti nákladnej prepravy. Každá zákazka je pre nás osobný záväzok.</p>
         <p class="about-p">Disponujeme modernou flotilou vozidiel a rozsiahlou európskou sieťou. Vaše náklady sú v bezpečných rukách od nakládky po vykládku.</p>
         <a href="tel:+420608800504" class="about-tel">+420 608 800 504</a>
