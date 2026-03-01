@@ -107,12 +107,13 @@ nav ul li a:hover { color:var(--text); }
 }
 .nav-tel-sm:hover { color:var(--text); }
 .tm {
-  width:30px; height:30px; border:1px solid var(--border);
-  background:transparent; cursor:pointer; color:var(--muted);
-  font-size:.8rem; display:flex; align-items:center; justify-content:center;
-  transition:.2s;
+  width:34px; height:34px; border:1px solid var(--border);
+  background:var(--surface); cursor:pointer; color:var(--text);
+  font-size:1.1rem; display:flex; align-items:center; justify-content:center;
+  transition:.2s; border-radius:4px;
 }
 .tm:hover { border-color:var(--blue); color:var(--blue); }
+[data-theme="light"] .tm { background:transparent; }
 
 /* ══ HERO ══ */
 #domov {
