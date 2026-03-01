@@ -493,6 +493,15 @@ footer{
   .gallery-grid{grid-template-columns:1fr;}
   .gal-card:first-child{grid-column:auto;}
 }
+@media(max-width:768px){
+  nav,.nav-inner{box-sizing:border-box;max-width:100%;}
+  .nav-inner{padding:0 1rem;gap:12px;flex-wrap:wrap;min-height:56px;}
+  .nav-logo{font-size:16px;}
+  .nav-links,.theme-toggle{display:none;}
+  .nav-tel-mobile{display:block;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;}
+  .nav-tel-mobile:hover{color:var(--accent-warm);}
+}
+.nav-tel-mobile{display:none;}
 </style>
 </head>
 <body>
@@ -514,6 +523,7 @@ footer{
       </div>
       <span class="toggle-label" id="toggleLabel">Tmavý</span>
     </div>
+    <a href="tel:+420608800504" class="nav-tel-mobile">+420 608 800 504</a>
   </div>
 </nav>
 
@@ -757,7 +767,28 @@ toggle.addEventListener('keydown', e => {
     toggle.click();
   }
 });
-</script>
 
+(function(){
+  function copyTel(e){
+    var a=e.target.closest('a[href^="tel:"]');
+    if(!a)return;
+    var num=(a.getAttribute('href')||'').replace(/^tel:/i,'').trim();
+    if(num&&navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(num).then(function(){
+        var t=document.getElementById('tel-toast');
+        if(t)t.remove();
+        t=document.createElement('span');
+        t.id='tel-toast';
+        t.textContent='Číslo skopírované';
+        t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent-warm);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
+        document.body.appendChild(t);
+        setTimeout(function(){if(t.parentNode)t.remove();},2500);
+      });
+    }
+  }
+  document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+})();
+</script>
+<style>@keyframes telFadeOut{to{opacity:0;}}</style>
 </body>
 </html>

@@ -329,9 +329,10 @@ footer {
 @media(max-width:768px){
   nav { padding:0 1rem; min-height:56px; height:auto; flex-wrap:wrap; gap:.5rem; }
   .logo { font-size:1rem; }
+  nav ul { display:none; }
+  .nav-r .toggle { display:none; }
   .nav-r { gap:.6rem; flex-shrink:0; }
-  .nav-tel { font-size:.65rem; white-space:nowrap; }
-  .toggle { width:32px; height:32px; font-size:1.1rem; }
+  .nav-tel { font-size:.7rem; white-space:nowrap; }
   .hero-inner { padding:3rem 1.25rem 4rem; }
   h1 { font-size:clamp(2.25rem,10vw,4rem); letter-spacing:-1px; word-break:break-word; overflow-wrap:break-word; }
   .h-motto { max-width:100%; }
@@ -506,6 +507,27 @@ function toggleTheme() {
   const h = document.documentElement;
   h.setAttribute('data-theme', h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
 }
+(function(){
+  function copyTel(e){
+    var a=e.target.closest('a[href^="tel:"]');
+    if(!a)return;
+    var num=(a.getAttribute('href')||'').replace(/^tel:/i,'').trim();
+    if(num&&navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(num).then(function(){
+        var t=document.getElementById('tel-toast');
+        if(t)t.remove();
+        t=document.createElement('span');
+        t.id='tel-toast';
+        t.textContent='Číslo skopírované';
+        t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--bg);padding:8px 16px;border-radius:4px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
+        document.body.appendChild(t);
+        setTimeout(function(){if(t.parentNode)t.remove();},2500);
+      });
+    }
+  }
+  document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+})();
 </script>
+<style>@keyframes telFadeOut{to{opacity:0;}}</style>
 </body>
 </html>
