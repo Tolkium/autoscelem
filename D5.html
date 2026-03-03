@@ -12,114 +12,6 @@
     /* ═══ DESIGN 5: NEO-SWISS GRID ═══ */
 
 
-@media(max-width:900px) {
-  /* 1. Force the container to never exceed the screen width */
-  html, body {
-    overflow-x: hidden !important;
-    width: 100% !important;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* 2. Fix Navigation - Remove all fixed pixel widths */
-  nav {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    width: 100% !important;
-    padding: 0 15px !important;
-    grid-template-columns: none !important; /* Kill the grid */
-  }
-
-  .logo {
-    border: none !important;
-    padding: 0 !important;
-    width: auto !important;
-  }
-
-  nav ul {
-    display: none !important;
-  }
-
-  .nav-actions {
-    border: none !important;
-    padding: 0 !important;
-    width: auto !important;
-  }
-
-  /* 3. Fix Hero Section - The "H1" is usually what breaks the width */
-  .hero-grid-container {
-    display: block !important; /* Switch from Grid to Block */
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  .hero-centre {
-    width: 100% !important;
-    padding: 100px 20px 40px !important;
-    box-sizing: border-box !important;
-    display: block !important;
-  }
-
-  /* CRITICAL: Scale down the text so it fits small screens */
-  h1 {
-    font-size: 2.2rem !important; /* Much smaller to prevent overflow */
-    line-height: 1.1 !important;
-    word-break: break-word !important;
-    width: 100% !important;
-  }
-
-  .hero-motto {
-    font-size: 0.8rem !important;
-    width: 100% !important;
-  }
-
-  /* 4. Fix the Stats/Bottom Cells */
-  .hero-bottom {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important; /* 2x2 grid */
-    width: 100% !important;
-  }
-
-  .hb-cell {
-    border-right: 1px solid var(--border) !important;
-    border-top: 1px solid var(--border) !important;
-    padding: 20px !important;
-  }
-
-  /* 5. Fix Services & Contact */
-  .svc-grid-inner, .o-nas-inner, .kontakt-inner, .gallery-swiss {
-    display: block !important;
-    width: 100% !important;
-  }
-
-  .svc-g, .ao-text, .k-info, .k-form {
-    width: 100% !important;
-    border-right: none !important;
-    padding: 30px 20px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* 6. Fix Footer */
-  footer {
-    display: flex !important;
-    flex-direction: column !important;
-    text-align: center !important;
-    width: 100% !important;
-    padding: 20px !important;
-    gap: 10px;
-  }
-
-  /* 7. The Grid Overlay Fix */
-  body::before {
-    width: 100% !important;
-    background-size: 40px 40px !important; /* Smaller grid for mobile */
-  }
-}
-
-
     
 
     [data-theme="dark"] {
@@ -918,7 +810,8 @@
 
       .hero-grid-container {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: 1fr auto;
+        min-height: calc(100vh - 60px);
       }
 
       .hero-grid-container::after {
@@ -932,11 +825,54 @@
 
       .hero-centre {
         grid-column: 1;
+        padding: 1.25rem 1.25rem 1.5rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-tag-line {
+        width: 100%;
+        margin-bottom: 1rem;
+        text-align: center;
+        letter-spacing: 3px;
+      }
+
+      h1 {
+        font-size: clamp(2.15rem, 11.5vw, 3.2rem);
+        line-height: .95;
+        letter-spacing: -1px;
+        margin-bottom: .75rem;
+        text-align: center;
+      }
+
+      h1 .thin {
+        letter-spacing: 1px;
+        margin-bottom: .35rem;
+      }
+
+      .hero-motto {
+        font-size: .88rem;
+        line-height: 1.55;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .hero-ctas {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: .5rem;
+      }
+
+      .hc-primary,
+      .hc-secondary {
+        min-width: 170px;
       }
 
       .hero-photo {
-        height: 200px;
-        grid-column: 1;
+        display: none;
       }
 
       .hero-bottom {
@@ -986,6 +922,21 @@
 
 
       
+    }
+
+    @media(max-width:768px) {
+      .hero-tag-line {
+        font-size: .62rem;
+        letter-spacing: 2.4px;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 10.5vw, 2.8rem);
+      }
+
+      .hero-motto {
+        font-size: .84rem;
+      }
     }
   </style>
 </head>

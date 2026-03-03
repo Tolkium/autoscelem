@@ -75,6 +75,7 @@ nav{
 .nav-inner{
   max-width:1200px;margin:0 auto;padding:0 56px;
   height:100%;display:flex;align-items:center;justify-content:space-between;gap:32px;
+  position:relative;
 }
 .nav-logo{
   font-family:'Playfair Display',serif;
@@ -85,6 +86,7 @@ nav{
 }
 .nav-logo span{color:var(--accent-warm);}
 .nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links{margin-left:auto;margin-right:12px;}
 .nav-links a{
   font-size:12px;font-weight:500;letter-spacing:.3px;
   color:var(--text3);text-decoration:none;
@@ -92,6 +94,14 @@ nav{
   transition:all .2s;
 }
 .nav-links a:hover{color:var(--text);background:var(--border);}
+.nav-tel-center{
+  display:block;
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-size:14px;font-weight:600;color:var(--text);text-decoration:none;
+  white-space:nowrap;
+}
+.nav-tel-center:hover{color:var(--accent-warm);}
 
 /* THEME TOGGLE */
 .theme-toggle{
@@ -486,7 +496,7 @@ footer{
 @media(max-width:600px){
   .nav-inner{padding:0 20px;}
   .toggle-label{display:none;}
-  .hero-left{padding:60px 20px;}
+  .hero-left{padding:28px 20px 48px;}
   .wrap{padding:0 20px;}
   .stats-inner{padding:0 20px;}
   .footer-inner{padding:0 20px;}
@@ -495,14 +505,16 @@ footer{
 }
 @media(max-width:768px){
   nav,.nav-inner{box-sizing:border-box;max-width:100%;}
-  .nav-inner{padding:0 1rem;gap:12px;flex-wrap:wrap;min-height:56px;}
+  .nav-inner{padding:0 1rem;gap:12px;flex-wrap:nowrap;min-height:56px;position:relative;}
   .nav-logo{font-size:16px;}
   .nav-links{display:none;}
-  .nav-tel-mobile{display:block;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;}
+  .nav-tel-center{
+    font-size:13px;
+  }
   .theme-toggle{display:flex;}
-  .nav-tel-mobile:hover{color:var(--accent-warm);}
+  .hero-label{gap:0;}
+  .hero-label::before{display:none;}
 }
-.nav-tel-mobile{display:none;}
 </style>
 </head>
 <body>
@@ -524,7 +536,7 @@ footer{
       </div>
       <span class="toggle-label" id="toggleLabel">Tmavý</span>
     </div>
-    <a href="tel:+420608800504" class="nav-tel-mobile">+420 608 800 504</a>
+    <a href="tel:+420608800504" class="nav-tel-center">+420 608 800 504</a>
   </div>
 </nav>
 
@@ -770,20 +782,30 @@ toggle.addEventListener('keydown', e => {
 });
 
 (function(){
+  function isDesktopLike(){
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  }
+
+  function showToast(msg){
+    var t=document.getElementById('tel-toast');
+    if(t)t.remove();
+    t=document.createElement('span');
+    t.id='tel-toast';
+    t.textContent=msg;
+    t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent-warm);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
+    document.body.appendChild(t);
+    setTimeout(function(){if(t.parentNode)t.remove();},2500);
+  }
+
   function copyTel(e){
     var a=e.target.closest('a[href^="tel:"]');
     if(!a)return;
+    if(!isDesktopLike())return;
+    e.preventDefault();
     var num=(a.getAttribute('href')||'').replace(/^tel:/i,'').trim();
     if(num&&navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(num).then(function(){
-        var t=document.getElementById('tel-toast');
-        if(t)t.remove();
-        t=document.createElement('span');
-        t.id='tel-toast';
-        t.textContent='Číslo skopírované';
-        t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent-warm);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;z-index:9999;animation:telFadeOut 2s ease 1.5s forwards;';
-        document.body.appendChild(t);
-        setTimeout(function(){if(t.parentNode)t.remove();},2500);
+        showToast('Číslo skopírované');
       });
     }
   }

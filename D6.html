@@ -88,10 +88,11 @@ nav ul a:hover { color:var(--text); border-bottom-color:var(--teal); }
 
 /* ══ HERO ══ */
 #domov {
-  min-height:calc(100vh - 85px); padding-top:64px;
+  min-height:100vh; padding-top:64px;
   position:relative; overflow:hidden;
   background:var(--bg3);
   max-width:100%;
+  display:flex; flex-direction:column;
 }
 .hero-bg {
   position:absolute; inset:0;
@@ -110,9 +111,10 @@ nav ul a:hover { color:var(--text); border-bottom-color:var(--teal); }
 .hero-inner {
   position:relative; z-index:2;
   max-width:1200px; margin:0 auto;
-  padding:6rem 3rem 8rem;
+  padding:6rem 3rem 3rem;
   display:grid; grid-template-columns:1fr 420px;
   gap:3rem; align-items:end;
+  width:100%;
 }
 .h-left { }
 .h-cat {
@@ -169,6 +171,10 @@ h1 sup {
   background:var(--teal); padding:1.25rem 3rem;
   display:flex; justify-content:space-around; gap:2rem;
   flex-wrap:wrap;
+  margin-top:auto;
+  width:100%;
+  position:relative;
+  z-index:3;
 }
 .s-item { display:flex; flex-direction:column; align-items:center; }
 .s-num { font-family:'Fraunces',serif; font-size:2rem; font-weight:900; color:var(--bg); line-height:1; }
@@ -341,7 +347,14 @@ footer {
   .h-badge { width:100%; box-sizing:border-box; }
   .sluzby-inner { padding:0 1.25rem; }
   .svc-tiles { grid-template-columns:1fr; }
-  .stats-row { padding:1rem 1.25rem; gap:1rem; }
+  .stats-row {
+    padding:1rem 1.25rem;
+    gap:1rem;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    justify-items:center;
+  }
+  .stats-row .s-item:last-child { grid-column:1 / -1; }
   .sec-top { flex-direction:column; align-items:flex-start; }
   .sec-aside { max-width:100%; }
   .about-text { padding:3rem 1.5rem; }
@@ -386,15 +399,14 @@ footer {
       </div>
     </div>
   </div>
-</section>
-
-<div class="stats-row">
+  <div class="stats-row">
   <div class="s-item"><div class="s-num">15+</div><div class="s-lbl">Rokov praxe</div></div>
   <div class="s-item"><div class="s-num">500+</div><div class="s-lbl">Zákazníci</div></div>
   <div class="s-item"><div class="s-num">EU</div><div class="s-lbl">Pôsobnosť</div></div>
   <div class="s-item"><div class="s-num">24/7</div><div class="s-lbl">Dostupnosť</div></div>
   <div class="s-item"><div class="s-num">100%</div><div class="s-lbl">Poistenie</div></div>
-</div>
+  </div>
+</section>
 
 <section id="sluzby">
   <div class="sluzby-inner">
