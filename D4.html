@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AutoSCELEM - profesionálna autodoprava v ČR, SR a EÚ. Vnútroštátna, medzinárodná aj expresná preprava a sťahovacie služby.">
 <title>AutoSCELEM — Autodoprava Vladimír Jerie</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -94,6 +95,18 @@ nav{
   transition:all .2s;
 }
 .nav-links a:hover{color:var(--text);background:var(--border);}
+.nav-logo:focus-visible,
+.nav-links a:focus-visible,
+.nav-tel-center:focus-visible,
+.btn-solid:focus-visible,
+.btn-outline:focus-visible,
+.contact-cta:focus-visible,
+.ci-val a:focus-visible,
+.form-submit:focus-visible,
+.theme-toggle:focus-visible{
+  outline:2px solid var(--accent-warm);
+  outline-offset:3px;
+}
 .nav-tel-center{
   display:block;
   position:absolute;left:50%;top:50%;
@@ -422,6 +435,7 @@ h1 em{
 .ci-row:first-child{border-top:1px solid var(--border);}
 .ci-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent-warm);margin-bottom:8px;}
 .ci-val{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--text);transition:color .35s;}
+.ci-val--accent{color:var(--accent-warm);}
 .ci-val a{color:var(--text);text-decoration:none;transition:color .2s;}
 .ci-val a:hover{color:var(--accent-warm);}
 
@@ -474,6 +488,15 @@ footer{
 .f-logo span{color:var(--accent-warm);}
 .f-copy{font-size:12px;color:var(--text3);}
 
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+
 /* ─── RESPONSIVE ─── */
 @media(max-width:1100px){
   .wrap,.nav-inner,.stats-inner,.footer-inner{padding:0 36px;}
@@ -520,7 +543,7 @@ footer{
 <body>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Hlavná navigácia">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">Auto<span>SCELEM</span></a>
     <div class="nav-links">
@@ -553,7 +576,7 @@ footer{
     </div>
   </div>
   <div class="hero-right">
-    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=85" alt="Autodoprava">
+    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1200&q=85" alt="Autodoprava" decoding="async">
     <div class="hero-badge">
       <div class="hb-label">Dostupní</div>
       <div class="hb-val">24 / 7</div>
@@ -589,7 +612,7 @@ footer{
         <span class="svc-index">02</span>
         <div class="svc-content">
           <div class="svc-name">Medzinárodná preprava</div>
-          <p class="svc-desc">Pokrývame celú EÚ a ďalej. Skúsení vodiči, kompletná dokumentácia a colné formalitiy vybavené.</p>
+          <p class="svc-desc">Pokrývame celú EÚ a ďalej. Skúsení vodiči, kompletná dokumentácia a colné formality vybavené.</p>
         </div>
         <span class="svc-arrow">→</span>
       </div>
@@ -636,23 +659,23 @@ footer{
     <h2 class="section-heading">Flotila &amp; <em>prepravy</em></h2>
     <div class="gallery-grid">
       <div class="gal-card">
-        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Diaľnica">
+        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Diaľnica" loading="lazy" decoding="async">
         <div class="gal-info"><span>Diaľničná preprava</span></div>
       </div>
       <div class="gal-card">
-        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Logistika">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Logistika" loading="lazy" decoding="async">
         <div class="gal-info"><span>Logistika</span></div>
       </div>
       <div class="gal-card">
-        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="Flotila">
+        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="Flotila" loading="lazy" decoding="async">
         <div class="gal-info"><span>Flotila</span></div>
       </div>
       <div class="gal-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Doručenie">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Doručenie" loading="lazy" decoding="async">
         <div class="gal-info"><span>Doručenie</span></div>
       </div>
       <div class="gal-card">
-        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80" alt="Vozidlo">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80" alt="Vozidlo" loading="lazy" decoding="async">
         <div class="gal-info"><span>Naše vozidlá</span></div>
       </div>
     </div>
@@ -664,7 +687,7 @@ footer{
   <div class="wrap">
     <div class="about-inner">
       <div class="about-img-wrap">
-        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=85" alt="O nás">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=85" alt="O nás" loading="lazy" decoding="async">
       </div>
       <div class="about-text">
         <div class="section-eyebrow">Kto sme</div>
@@ -707,23 +730,23 @@ footer{
         </div>
         <div class="ci-row">
           <div class="ci-label">Dostupnosť</div>
-          <div class="ci-val" style="color:var(--accent-warm)">24 hodín · 7 dní</div>
+          <div class="ci-val ci-val--accent">24 hodín · 7 dní</div>
         </div>
       </div>
-      <form class="contact-form" onsubmit="return false;">
+      <form class="contact-form">
         <div class="form-row-2">
           <div class="fg">
-            <label>Meno a priezvisko</label>
-            <input type="text" placeholder="Ján Novák">
+            <label for="full-name">Meno a priezvisko</label>
+            <input id="full-name" name="full_name" type="text" autocomplete="name" placeholder="Ján Novák" required>
           </div>
           <div class="fg">
-            <label>Telefón alebo email</label>
-            <input type="text" placeholder="+421 000 000 000">
+            <label for="contact-value">Telefón alebo email</label>
+            <input id="contact-value" name="contact_value" type="text" autocomplete="tel" placeholder="+421 000 000 000" required>
           </div>
         </div>
         <div class="fg">
-          <label>Typ prepravy</label>
-          <select>
+          <label for="transport-type">Typ prepravy</label>
+          <select id="transport-type" name="transport_type" required>
             <option>Vnútroštátna preprava</option>
             <option>Medzinárodná preprava</option>
             <option>Sťahovacie služby</option>
@@ -733,8 +756,8 @@ footer{
           </select>
         </div>
         <div class="fg">
-          <label>Popis zákazky</label>
-          <textarea placeholder="Opíšte váš náklad, trasu, termín a ďalšie požiadavky..."></textarea>
+          <label for="job-description">Popis zákazky</label>
+          <textarea id="job-description" name="job_description" placeholder="Opíšte váš náklad, trasu, termín a ďalšie požiadavky..." required></textarea>
         </div>
         <button type="submit" class="form-submit">Odoslať dopyt</button>
       </form>
@@ -758,6 +781,7 @@ const label = document.getElementById('toggleLabel');
 function setTheme(theme) {
   html.setAttribute('data-theme', theme);
   label.textContent = theme === 'light' ? 'Tmavý' : 'Svetlý';
+  toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
   localStorage.setItem('theme', theme);
 }
 
@@ -767,6 +791,8 @@ if (saved) {
   setTheme(saved);
 } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
   setTheme('dark');
+} else {
+  setTheme('light');
 }
 
 toggle.addEventListener('click', () => {
@@ -809,7 +835,7 @@ toggle.addEventListener('keydown', e => {
       });
     }
   }
-  document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
 })();
 </script>
 <style>@keyframes telFadeOut{to{opacity:0;}}</style>

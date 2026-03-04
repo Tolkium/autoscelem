@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AutoSCELEM – profesionální autodoprava, stěhování a expresní přeprava po ČR i do zahraničí.">
 <title>AutoSCELEM – Vladimír Jerie | Autodoprava</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,6 +60,16 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--accent); }
+  .nav-links a:focus-visible,
+  .nav-logo:focus-visible,
+  .nav-tel-mobile:focus-visible,
+  .btn-primary:focus-visible,
+  .btn-outline:focus-visible,
+  .contact-val a:focus-visible,
+  .footer-links a:focus-visible {
+    outline: 2px solid var(--accent2);
+    outline-offset: 3px;
+  }
   .nav-cta {
     background: var(--accent); color: #fff !important;
     padding: 0.5rem 1.4rem; border-radius: 2px; 
@@ -296,7 +307,6 @@
   .contact-layout {
     display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 3rem; align-items: start;
   }
-  .contact-info { }
   .contact-item {
     display: flex; gap: 1.5rem; align-items: flex-start;
     padding: 1.5rem 0; border-bottom: 1px solid var(--border);
@@ -312,7 +322,6 @@
   .contact-val a { color: var(--text); text-decoration: none; }
   .contact-val a:hover { color: var(--accent); }
 
-  .contact-form { }
   .form-group { margin-bottom: 1.2rem; }
   .form-group label {
     display: block; font-size: 0.75rem; letter-spacing: 2px;
@@ -331,6 +340,7 @@
   .form-group textarea { height: 130px; resize: vertical; }
   .form-group select option { background: var(--card); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-block { width: 100%; display: block; text-align: center; }
 
   /* FOOTER */
   footer {
@@ -370,12 +380,20 @@
     .form-row { grid-template-columns: 1fr; }
     .about-img-badge { bottom: 0; right: 0; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Hlavní navigace">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo"><span>AUTO</span>SCEL<span>EM</span></a>
     <ul class="nav-links">
@@ -446,37 +464,37 @@
         <span class="service-num">01</span>
         <span class="service-icon">🚛</span>
         <h3 class="service-title">Nákladní doprava</h3>
-        <p class="service-text">Pan a paní Dursleyovi z Čísla čtyři, Zobí ulice, byli hrdí na to, že jsou naprosto normální, a to vám může kdokoli potvrdit. Byli posledními lidmi, u nichž byste čekali zájem o cokoli záhadného.</p>
+        <p class="service-text">Přeprava palet, materiálu i kusových zásilek po celé ČR. Spolehlivé termíny, bezpečné zajištění nákladu a jasná komunikace během celé přepravy.</p>
       </div>
       <div class="service-card">
         <span class="service-num">02</span>
         <span class="service-icon">🏠</span>
         <h3 class="service-title">Stěhování</h3>
-        <p class="service-text">Pan Dursley byl ředitelem firmy Grunnings, která vyráběla vrtačky. Byl to velký, masitý muž, jemuž chyběl téměř krk, ale za to měl velmi velký knír.</p>
+        <p class="service-text">Kompletní stěhovací servis pro byty, domy i kanceláře. Pečlivá manipulace, možnost pomoci s nakládkou a přizpůsobení termínu podle vašich potřeb.</p>
       </div>
       <div class="service-card">
         <span class="service-num">03</span>
         <span class="service-icon">🌍</span>
         <h3 class="service-title">Mezinárodní přeprava</h3>
-        <p class="service-text">Paní Dursleyová byla štíhlá a blonďatá a měla téměř dvojnásobné množství krku, což se hodilo, protože trávila hodně času natahováním přes zahradní ploty a špiclováním sousedů.</p>
+        <p class="service-text">Zajišťujeme přepravu zásilek do zahraničí s důrazem na přesnost a administrativní jistotu. Trasy plánujeme efektivně pro rychlé a bezpečné doručení.</p>
       </div>
       <div class="service-card">
         <span class="service-num">04</span>
         <span class="service-icon">⚡</span>
         <h3 class="service-title">Expresní doručení</h3>
-        <p class="service-text">Dursleyovi měli malého syna Dudleyho a podle jejich názoru nebylo na světě hezčího chlapce. Dursleyovi měli vše, co si přáli, ale měli také tajemství.</p>
+        <p class="service-text">Když rozhodují hodiny, doručíme zásilku bez zbytečných prodlev. Ideální pro urgentní dokumenty, díly nebo zboží s přesným časem dodání.</p>
       </div>
       <div class="service-card">
         <span class="service-num">05</span>
         <span class="service-icon">📦</span>
         <h3 class="service-title">Skladování</h3>
-        <p class="service-text">Jejich největší strach byl, že to někdo odhalí. Nemysleli si, že by to vydrželi, kdyby se někdo dozvěděl o Potterových. Paní Potterová byla sestrou paní Dursleyové.</p>
+        <p class="service-text">Krátkodobé uskladnění materiálu i vybavení před další přepravou. Nabízíme flexibilní řešení pro firmy i jednotlivce podle objemu zásilek.</p>
       </div>
       <div class="service-card">
         <span class="service-num">06</span>
         <span class="service-icon">🔧</span>
         <h3 class="service-title">Speciální přeprava</h3>
-        <p class="service-text">Byla naprosto hrozná a neviděli ji mnoho let; bylo to tak nejlepší, říkali si. Dursleyovi se třásli při pomyšlení na to, co by sousedé řekli, kdyby přijeli Potterovi.</p>
+        <p class="service-text">Převoz rozměrných nebo citlivých nákladů s individuálním přístupem. Každou zakázku řešíme samostatně podle typu zboží a cílové destinace.</p>
       </div>
     </div>
   </div>
@@ -490,15 +508,15 @@
     <div class="divider"></div>
     <div class="about-layout">
       <div class="about-img">
-        <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=800&q=80" alt="Naše vozidla">
+        <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=800&q=80" alt="Naše vozidla" loading="lazy" decoding="async">
         <div class="about-img-badge">
           <div class="badge-num">15+</div>
           <div class="badge-text">Let na trhu</div>
         </div>
       </div>
       <div>
-        <p class="about-text">Pan a paní Dursleyovi z Čísla čtyři, Zobí ulice, byli hrdí na to, že jsou naprosto normální, a to vám může kdokoli potvrdit. Byli posledními lidmi, u nichž byste čekali zájem o cokoli záhadného nebo zvláštního, protože takovým nesmyslům prostě neholdovali.</p>
-        <p class="about-text">Pan Dursley byl ředitelem firmy Grunnings, která vyráběla vrtačky. Byl to velký, masitý muž, jemuž chyběl téměř krk, ale za to měl velmi velký knír. Paní Dursleyová byla štíhlá a blonďatá a měla téměř dvojnásobné množství krku.</p>
+        <p class="about-text">AutoSCELEM zajišťuje autodopravu s důrazem na spolehlivost, rychlou reakci a férové podmínky. Každou zakázku řešíme individuálně podle typu nákladu, termínu i trasy.</p>
+        <p class="about-text">Díky dlouholeté praxi víme, že nejdůležitější je přesné plánování, bezpečnost zásilek a jasná komunikace. Klienti se na nás obrací opakovaně při pravidelné i jednorázové přepravě.</p>
         <ul class="about-list">
           <li>Moderní vozový park s GPS sledováním</li>
           <li>Zkušení a spolehliví řidiči</li>
@@ -520,23 +538,23 @@
     <div class="divider"></div>
     <div class="gallery-grid">
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1000&q=80" alt="Velký nákladní vůz">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1000&q=80" alt="Velký nákladní vůz" loading="lazy" decoding="async">
         <div class="gallery-label">Velkokapacitní vozidla</div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Dodávka">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Dodávka" loading="lazy" decoding="async">
         <div class="gallery-label">Dodávky</div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Nákladní auto">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Nákladní auto" loading="lazy" decoding="async">
         <div class="gallery-label">Nákladní auta</div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=600&q=80" alt="Kamiony">
+        <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=600&q=80" alt="Kamiony" loading="lazy" decoding="async">
         <div class="gallery-label">Kamiony</div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80" alt="Speciální vozidla">
+        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&q=80" alt="Speciální vozidla" loading="lazy" decoding="async">
         <div class="gallery-label">Speciální vozidla</div>
       </div>
     </div>
@@ -584,21 +602,21 @@
         <form>
           <div class="form-row">
             <div class="form-group">
-              <label>Jméno</label>
-              <input type="text" placeholder="Vaše jméno">
+              <label for="name">Jméno</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Vaše jméno" required>
             </div>
             <div class="form-group">
-              <label>Telefon</label>
-              <input type="tel" placeholder="+420 xxx xxx xxx">
+              <label for="phone">Telefon</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+420 xxx xxx xxx" required>
             </div>
           </div>
           <div class="form-group">
-            <label>E-mail</label>
-            <input type="email" placeholder="vas@email.cz">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="vas@email.cz" required>
           </div>
           <div class="form-group">
-            <label>Typ služby</label>
-            <select>
+            <label for="service">Typ služby</label>
+            <select id="service" name="service" required>
               <option>Nákladní doprava</option>
               <option>Stěhování</option>
               <option>Mezinárodní přeprava</option>
@@ -607,10 +625,10 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Zpráva</label>
-            <textarea placeholder="Popište vaši poptávku – odkud, kam, co, kdy..."></textarea>
+            <label for="message">Zpráva</label>
+            <textarea id="message" name="message" placeholder="Popište vaši poptávku – odkud, kam, co, kdy..." required></textarea>
           </div>
-          <button type="submit" class="btn-primary" style="width:100%;display:block;text-align:center;">Odeslat poptávku</button>
+          <button type="submit" class="btn-primary btn-block">Odeslat poptávku</button>
         </form>
       </div>
     </div>
@@ -631,7 +649,7 @@
 
 <script>
   (function () {
-    window.addEventListener('load', function () {
+    function setTickerAnimation() {
       var track = document.querySelector('.ticker-track');
       if (!track) return;
       var trackWidth = track.offsetWidth;
@@ -642,6 +660,13 @@
       style.id = 'ticker-keyframes';
       style.textContent = '@keyframes tick{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-' + trackWidth + 'px,0,0)}}';
       document.head.appendChild(style);
+    }
+
+    var resizeTimer;
+    window.addEventListener('load', setTickerAnimation);
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setTickerAnimation, 120);
     });
   })();
   (function(){

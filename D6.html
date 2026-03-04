@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="autoscelem - autodoprava a logistika v ČR, SR a celej Európe. Expresná, vnútroštátna aj medzinárodná preprava 24/7.">
 <title>autoscelem — Transport & Logistika</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -74,6 +75,17 @@ nav ul a {
 }
 nav ul a:hover { color:var(--text); border-bottom-color:var(--teal); }
 .nav-r { display:flex; align-items:center; gap:1.25rem; }
+.logo:focus-visible,
+nav ul a:focus-visible,
+.nav-tel:focus-visible,
+.toggle:focus-visible,
+.h-cta-primary:focus-visible,
+.h-cta-secondary:focus-visible,
+.k-link-val a:focus-visible,
+.kbtn:focus-visible {
+  outline:2px solid var(--teal);
+  outline-offset:3px;
+}
 .nav-tel { font-size:.7rem; color:var(--teal); text-decoration:none; letter-spacing:1px; }
 .nav-tel:hover { color:var(--copper); }
 .toggle {
@@ -113,7 +125,9 @@ nav ul a:hover { color:var(--text); border-bottom-color:var(--teal); }
   max-width:1200px; margin:0 auto;
   padding:6rem 3rem 3rem;
   display:grid; grid-template-columns:1fr 420px;
-  gap:3rem; align-items:end;
+  gap:3rem; align-items:center;
+  align-content:center;
+  flex:1;
   width:100%;
 }
 .h-left { }
@@ -320,6 +334,15 @@ footer {
   font-size:.6rem; letter-spacing:2px; color:var(--muted);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after {
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
+
 @media(max-width:900px){
   .hero-inner { grid-template-columns:1fr; }
   .h-right { flex-direction:row; flex-wrap:wrap; }
@@ -366,7 +389,7 @@ footer {
 </head>
 <body>
 
-<nav>
+<nav aria-label="Hlavná navigácia">
   <div class="logo">auto<em>scelem</em></div>
   <ul>
     <li><a href="#domov">Domov</a></li>
@@ -377,7 +400,7 @@ footer {
   </ul>
   <div class="nav-r">
     <a href="tel:+420608800504" class="nav-tel">+420 608 800 504</a>
-    <button class="toggle" onclick="toggleTheme()"><span class="toggle-icon">◑</span></button>
+    <button id="theme-toggle" class="toggle" type="button" aria-label="Prepnúť tému" aria-pressed="true"><span class="toggle-icon">◑</span></button>
   </div>
 </nav>
 
@@ -431,14 +454,14 @@ footer {
 <section id="o-nas">
   <div class="about-wrap">
     <div class="about-photos">
-      <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=900&q=80" alt="Preprava">
+      <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=900&q=80" alt="Preprava" loading="lazy" decoding="async">
       <div class="about-photos-overlay"></div>
     </div>
     <div class="about-text">
       <div class="sec-kicker">Kto sme</div>
       <h2>autoscelem<br>& Vladimír Jerie</h2>
       <br>
-      <p>autoscelem je značka spoliehlívej autodopravy s ľudskou tvárou. Vladimír Jerie osobne stojí za každou zákazkou — to je naša záruka kvality a termínov.</p>
+      <p>autoscelem je značka spoľahlivej autodopravy s ľudskou tvárou. Vladimír Jerie osobne stojí za každou zákazkou — to je naša záruka kvality a termínov.</p>
       <p>Moderná flotila vozidiel, GPS monitoring, poistenie každej zásielky a profesionálni vodiči — to sú piliere, na ktorých stojí naša reputácia.</p>
       <div class="about-grid">
         <div class="ag-item"><div class="ag-num">15+</div><div class="ag-lbl">Rokov praxe</div></div>
@@ -456,23 +479,23 @@ footer {
   <h2>Galeria</h2>
   <div class="gal-layout">
     <div class="gl">
-      <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80" alt="Flotila">
+      <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80" alt="Flotila" loading="lazy" decoding="async">
       <div class="gl-caption">Naša flotila</div>
     </div>
     <div class="gl">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Logistika">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Logistika" loading="lazy" decoding="async">
       <div class="gl-caption">Logistika</div>
     </div>
     <div class="gl">
-      <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=500&q=80" alt="Sklad">
+      <img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=500&q=80" alt="Sklad" loading="lazy" decoding="async">
       <div class="gl-caption">Sklad</div>
     </div>
     <div class="gl">
-      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&q=80" alt="Na ceste">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&q=80" alt="Na ceste" loading="lazy" decoding="async">
       <div class="gl-caption">Na ceste</div>
     </div>
     <div class="gl">
-      <img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=500&q=80" alt="Transport">
+      <img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=500&q=80" alt="Transport" loading="lazy" decoding="async">
       <div class="gl-caption">Transport</div>
     </div>
   </div>
@@ -488,22 +511,22 @@ footer {
       <p>Máte záujem o prepravu? Kontaktujte nás telefonicky alebo cez formulár — odpovedáme rýchlo a konkrétne.</p>
       <div class="k-links">
         <div class="k-link"><div class="k-link-ico">📞</div><div><div class="k-link-lbl">Telefón</div><div class="k-link-val"><a href="tel:+420608800504">+420 608 800 504</a></div></div></div>
-        <div class="k-link"><div class="k-link-ico">🌐</div><div><div class="k-link-lbl">Web</div><div class="k-link-val"><a href="http://autoscelem.com">autoscelem.com</a></div></div></div>
+        <div class="k-link"><div class="k-link-ico">🌐</div><div><div class="k-link-lbl">Web</div><div class="k-link-val"><a href="https://autoscelem.com">autoscelem.com</a></div></div></div>
         <div class="k-link"><div class="k-link-ico">📍</div><div><div class="k-link-lbl">Pôsobnosť</div><div class="k-link-val">ČR & celá Európa</div></div></div>
         <div class="k-link"><div class="k-link-ico">⏰</div><div><div class="k-link-lbl">Dostupnosť</div><div class="k-link-val">24/7 non-stop</div></div></div>
       </div>
     </div>
-    <div class="k-form">
+    <form class="k-form">
       <h3>Poptávkový formulár</h3>
       <div class="fr2">
-        <div class="fg"><label>Meno</label><input placeholder="Vaše meno"></div>
-        <div class="fg"><label>Telefón</label><input placeholder="+420..."></div>
+        <div class="fg"><label for="name">Meno</label><input id="name" name="name" type="text" autocomplete="name" placeholder="Vaše meno" required></div>
+        <div class="fg"><label for="phone">Telefón</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+420..." required></div>
       </div>
-      <div class="fg"><label>E-mail</label><input placeholder="email@example.com"></div>
-      <div class="fg"><label>Trasa</label><input placeholder="Odkiaľ → kam"></div>
-      <div class="fg"><label>Správa</label><textarea placeholder="Typ nákladu, dátum, osobitné požiadavky..."></textarea></div>
-      <button class="kbtn">Odoslať dopyt →</button>
-    </div>
+      <div class="fg"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="email@example.com" required></div>
+      <div class="fg"><label for="route">Trasa</label><input id="route" name="route" type="text" placeholder="Odkiaľ → kam" required></div>
+      <div class="fg"><label for="message">Správa</label><textarea id="message" name="message" placeholder="Typ nákladu, dátum, osobitné požiadavky..." required></textarea></div>
+      <button type="submit" class="kbtn">Odoslať dopyt →</button>
+    </form>
   </div>
   </div>
 </section>
@@ -515,10 +538,32 @@ footer {
 </footer>
 
 <script>
-function toggleTheme() {
-  const h = document.documentElement;
-  h.setAttribute('data-theme', h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-}
+(function(){
+  var h = document.documentElement;
+  var toggle = document.getElementById('theme-toggle');
+  var saved = localStorage.getItem('theme');
+
+  function setTheme(theme) {
+    h.setAttribute('data-theme', theme);
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+    localStorage.setItem('theme', theme);
+  }
+
+  if (saved === 'light' || saved === 'dark') {
+    setTheme(saved);
+  } else {
+    setTheme(h.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      setTheme(h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  }
+})();
+
 (function(){
   function copyTel(e){
     var a=e.target.closest('a[href^="tel:"]');
@@ -537,7 +582,7 @@ function toggleTheme() {
       });
     }
   }
-  document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
 })();
 </script>
 <style>@keyframes telFadeOut{to{opacity:0;}}</style>

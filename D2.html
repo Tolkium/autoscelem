@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AutoSCELEM - profesionálna autodoprava v ČR, SR a EÚ. Vnútroštátna aj medzinárodná preprava, expresné doručenie a sťahovacie služby.">
 <title>AutoSCELEM — Autodoprava Vladimír Jerie</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
@@ -88,6 +89,14 @@ nav{
   transition:opacity .2s;
 }
 .nav-links a:hover{opacity:.5;}
+.nav-links a:focus-visible,
+.nav-tel-mobile:focus-visible,
+.btn-primary:focus-visible,
+.btn-submit:focus-visible,
+.contact-item-val a:focus-visible{
+  outline:2px solid var(--amber);
+  outline-offset:3px;
+}
 .nav-tel-mobile{display:none;}
 
 /* FILMSTRIP BORDER */
@@ -363,6 +372,7 @@ nav{
 .contact-info{display:flex;flex-direction:column;gap:32px;}
 .contact-item-label{font-size:10px;letter-spacing:4px;color:var(--amber);margin-bottom:8px;display:block;text-transform:uppercase;}
 .contact-item-val{font-size:20px;font-weight:700;color:var(--white);}
+.contact-item-val--accent{color:var(--amber);}
 .contact-item-val a{color:var(--amber);text-decoration:none;}
 
 .contact-form{display:flex;flex-direction:column;gap:16px;}
@@ -410,6 +420,15 @@ footer{
 }
 .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);letter-spacing:4px;}
 .footer-copy{font-size:11px;color:#444;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+  }
+}
 
 @media(max-width:900px){
   #hero,#about,.contact-grid{grid-template-columns:1fr;}
@@ -511,7 +530,7 @@ footer{
 <div class="filmstrip-r"></div>
 
 <!-- NAVBAR -->
-<nav>
+<nav aria-label="Hlavná navigácia">
   <div class="nav-logo">AutoSCELEM</div>
   <div class="nav-links">
     <a href="#hero">Úvod</a>
@@ -593,23 +612,23 @@ footer{
     <h2 class="sec-title">Galéria</h2>
     <div class="gallery-grid">
       <div class="gal-item">
-        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Nákladné auto na diaľnici">
+        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Nákladné auto na diaľnici" loading="lazy" decoding="async">
         <div class="gal-label">DIAĽNIČNÁ PREPRAVA</div>
       </div>
       <div class="gal-item">
-        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Sklad">
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80" alt="Sklad" loading="lazy" decoding="async">
         <div class="gal-label">LOGISTIKA</div>
       </div>
       <div class="gal-item">
-        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="Nákladné vozidlá">
+        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80" alt="Nákladné vozidlá" loading="lazy" decoding="async">
         <div class="gal-label">FLOTILA</div>
       </div>
       <div class="gal-item">
-        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80" alt="Preprava">
+        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80" alt="Preprava" loading="lazy" decoding="async">
         <div class="gal-label">MEDZINÁRODNÁ</div>
       </div>
       <div class="gal-item">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Doručenie">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Doručenie" loading="lazy" decoding="async">
         <div class="gal-label">DORUČENIE</div>
       </div>
     </div>
@@ -618,7 +637,7 @@ footer{
   <!-- ABOUT -->
   <section id="about">
     <div class="about-img">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="O nás">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="O nás" loading="lazy" decoding="async">
     </div>
     <div class="about-content">
       <span class="sec-tag">// O nás</span>
@@ -649,21 +668,21 @@ footer{
         </div>
         <div>
           <span class="contact-item-label">Dostupnosť</span>
-          <div class="contact-item-val" style="color:var(--amber)">24 / 7 / 365</div>
+          <div class="contact-item-val contact-item-val--accent">24 / 7 / 365</div>
         </div>
       </div>
-      <div class="contact-form">
+      <form class="contact-form">
         <div class="form-group">
-          <label>Meno a priezvisko</label>
-          <input type="text" placeholder="Ján Novák">
+          <label for="full-name">Meno a priezvisko</label>
+          <input id="full-name" name="full_name" type="text" autocomplete="name" placeholder="Ján Novák" required>
         </div>
         <div class="form-group">
-          <label>Telefón / Email</label>
-          <input type="text" placeholder="+421 000 000 000">
+          <label for="contact-value">Telefón / Email</label>
+          <input id="contact-value" name="contact_value" type="text" autocomplete="tel" placeholder="+421 000 000 000" required>
         </div>
         <div class="form-group">
-          <label>Typ prepravy</label>
-          <select>
+          <label for="transport-type">Typ prepravy</label>
+          <select id="transport-type" name="transport_type" required>
             <option>Vnútroštátna</option>
             <option>Medzinárodná</option>
             <option>Sťahovanie</option>
@@ -672,11 +691,11 @@ footer{
           </select>
         </div>
         <div class="form-group">
-          <label>Správa</label>
-          <textarea placeholder="Popíšte váš náklad, trasu a požiadavky..."></textarea>
+          <label for="message">Správa</label>
+          <textarea id="message" name="message" placeholder="Popíšte váš náklad, trasu a požiadavky..." required></textarea>
         </div>
-        <button class="btn-submit">ODOSLAŤ DOPYT</button>
-      </div>
+        <button type="submit" class="btn-submit">ODOSLAŤ DOPYT</button>
+      </form>
     </div>
   </section>
 
@@ -691,7 +710,7 @@ footer{
 
 <script>
   (function(){
-    window.addEventListener('load',function(){
+    function setTickerAnimation(){
       var track=document.querySelector('.ticker-track');
       if(!track)return;
       var w=track.offsetWidth;
@@ -702,6 +721,12 @@ footer{
       style.id='ticker-keyframes';
       style.textContent='@keyframes ticker{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-'+w+'px,0,0)}}';
       document.head.appendChild(style);
+    }
+    var resizeTimer;
+    window.addEventListener('load',setTickerAnimation);
+    window.addEventListener('resize',function(){
+      clearTimeout(resizeTimer);
+      resizeTimer=setTimeout(setTickerAnimation,120);
     });
   })();
   (function(){
@@ -723,7 +748,7 @@ footer{
       }
     }
     document.addEventListener('DOMContentLoaded',function(){
-      document.querySelectorAll('nav a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
+      document.querySelectorAll('a[href^="tel:"]').forEach(function(a){a.addEventListener('click',copyTel);});
     });
   })();
 </script>
