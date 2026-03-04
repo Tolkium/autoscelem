@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Autoscelem - autodoprava Vladimír Jerie. Spoľahlivá preprava v ČR a celej Európe.">
   <title>autoscelem — Vladimír Jerie</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300&display=swap"
@@ -108,6 +109,7 @@
       font-size: .85rem;
       font-weight: 900;
       color: var(--text);
+      text-decoration: none;
       letter-spacing: 1px;
       padding: 0 2rem;
       border-right: 1px solid var(--border);
@@ -188,6 +190,44 @@
     .tm:hover {
       border-color: var(--blue);
       color: var(--blue);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .muted-lead {
+      font-size: .82rem;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 500px;
+    }
+
+    .muted-caption {
+      font-size: .8rem;
+      line-height: 1.9;
+      color: var(--muted);
+      align-self: end;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .brand-mini {
+      font-family: 'Unbounded', sans-serif;
+      font-size: .6rem;
+      color: var(--muted);
+    }
+
+    .btn-full {
+      width: 100%;
+      border: none;
+      cursor: pointer;
     }
 
     /* ══ HERO ══ */
@@ -528,15 +568,17 @@
     .ao-img {
       overflow: hidden;
       position: relative;
+      min-height: 500px;
     }
 
     .ao-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       filter: grayscale(40%);
       transition: .5s;
-      min-height: 500px;
+      display: block;
     }
 
     .ao-img:hover img {
@@ -742,6 +784,12 @@
       justify-content: center;
     }
 
+    .k-form form {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
     .k-form h3 {
       font-family: 'Unbounded', sans-serif;
       font-size: 1rem;
@@ -909,15 +957,27 @@
       }
 
       .svc-grid-inner {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
       }
 
       .o-nas-inner {
         grid-template-columns: 1fr;
+        padding: 0;
       }
 
       .ao-img {
-        height: 260px;
+        height: 240px;
+        min-height: 240px;
+      }
+
+      .ao-text {
+        padding: 2rem 1.25rem;
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+
+      .ao-facts {
+        margin-top: 1.25rem;
       }
 
       .gallery-swiss {
@@ -962,13 +1022,24 @@
         font-size: .84rem;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="logo">auto<em>scelem</em></div>
+  <nav aria-label="Hlavná navigácia">
+    <a class="logo" href="#domov" aria-label="autoscelem domov">auto<em>scelem</em></a>
     <ul>
       <li><a href="#domov">Domov</a></li>
       <li><a href="#sluzby">Služby</a></li>
@@ -978,7 +1049,7 @@
     </ul>
     <div class="nav-actions">
       <a href="tel:+420608800504" class="nav-tel-sm">+420 608 800 504</a>
-      <button class="tm" onclick="toggleTheme()">◑</button>
+      <button class="tm" type="button" onclick="toggleTheme()" aria-label="Prepnúť tému">◑</button>
     </div>
   </nav>
 
@@ -1007,7 +1078,7 @@
             <div class="hp-num">24/7</div>
             <div class="hp-lbl">Dostupnosť</div>
           </div>
-          <div style="text-align:right">
+          <div class="text-right">
             <div class="hp-num">EU</div>
             <div class="hp-lbl">Pôsobnosť</div>
           </div>
@@ -1041,7 +1112,7 @@
           <div class="svc-tag">// Ponuka</div>
           <h2>Naše<br>Služby</h2>
         </div>
-        <p style="font-size:.82rem;line-height:1.9;color:var(--muted);max-width:500px;">Od lokálnej prepravy po
+        <p class="muted-lead">Od lokálnej prepravy po
           nadrozmerné európske náklady — komplexné riešenia pre každý dopravný požiadavok.</p>
       </div>
       <div class="svc-grid-inner">
@@ -1082,7 +1153,7 @@
   <section id="o-nas">
     <div class="o-nas-inner">
       <div class="ao-img">
-        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Flotila autoscelem">
+        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=900&q=80" alt="Flotila autoscelem" loading="lazy" decoding="async">
       </div>
       <div class="ao-text">
         <div class="svc-tag">// O spoločnosti</div>
@@ -1121,18 +1192,18 @@
           <div class="svc-tag">// Galeria</div>
           <h2>Naša<br>Práca</h2>
         </div>
-        <p style="font-size:.8rem;line-height:1.9;color:var(--muted);align-self:end;">Flotila a realizované prevozy.</p>
+        <p class="muted-caption">Flotila a realizované prevozy.</p>
       </div>
       <div class="gallery-swiss">
-        <div class="gs"><img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=900&q=80"
+        <div class="gs"><img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=900&q=80" loading="lazy" decoding="async"
             alt="Flotila"></div>
-        <div class="gs"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Logistika">
+        <div class="gs"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" loading="lazy" decoding="async" alt="Logistika">
         </div>
-        <div class="gs"><img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=500&q=80" alt="Sklad">
+        <div class="gs"><img src="https://images.unsplash.com/photo-1519003300449-424ad0405076?w=500&q=80" loading="lazy" decoding="async" alt="Sklad">
         </div>
-        <div class="gs"><img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=700&q=80"
+        <div class="gs"><img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=700&q=80" loading="lazy" decoding="async"
             alt="Transport"></div>
-        <div class="gs"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=500&q=80" alt="Cesta">
+        <div class="gs"><img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=500&q=80" loading="lazy" decoding="async" alt="Cesta">
         </div>
       </div>
     </div>
@@ -1142,7 +1213,7 @@
     <div class="kontakt-inner">
       <div class="k-label-col">
         <div class="svc-tag">// Kontakt</div>
-        <div style="font-family:'Unbounded',sans-serif;font-size:.6rem;color:var(--muted);">autoscelem<br>.com</div>
+        <div class="brand-mini">autoscelem<br>.com</div>
       </div>
       <div class="k-info">
         <h3>Kontaktné<br>Informácie</h3>
@@ -1157,7 +1228,7 @@
           <div class="k-e-icon">🌐</div>
           <div>
             <div class="k-e-lbl">Web</div>
-            <div class="k-e-val"><a href="http://autoscelem.com">autoscelem.com</a></div>
+            <div class="k-e-val"><a href="https://autoscelem.com">autoscelem.com</a></div>
           </div>
         </div>
         <div class="k-entry">
@@ -1177,14 +1248,16 @@
       </div>
       <div class="k-form">
         <h3>Poptávkový<br>Formulár</h3>
-        <div class="kfr">
-          <div class="kfg"><label>Meno</label><input placeholder="Vaše meno"></div>
-          <div class="kfg"><label>Telefón</label><input placeholder="+420..."></div>
-        </div>
-        <div class="kfg"><label>E-mail</label><input placeholder="email@example.com"></div>
-        <div class="kfg"><label>Trasa</label><input placeholder="Odkiaľ → Kam"></div>
-        <div class="kfg"><label>Správa</label><textarea placeholder="Náklad, termín, poznámky..."></textarea></div>
-        <button class="hc-primary" style="width:100%;border:none;cursor:pointer;">Odoslať dopyt →</button>
+        <form action="#" method="post">
+          <div class="kfr">
+            <div class="kfg"><label for="meno">Meno</label><input id="meno" name="meno" autocomplete="name" placeholder="Vaše meno"></div>
+            <div class="kfg"><label for="telefon">Telefón</label><input id="telefon" name="telefon" type="tel" autocomplete="tel" placeholder="+420..."></div>
+          </div>
+          <div class="kfg"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="email@example.com"></div>
+          <div class="kfg"><label for="trasa">Trasa</label><input id="trasa" name="trasa" placeholder="Odkiaľ → Kam"></div>
+          <div class="kfg"><label for="sprava">Správa</label><textarea id="sprava" name="sprava" placeholder="Náklad, termín, poznámky..."></textarea></div>
+          <button type="submit" class="hc-primary btn-full">Odoslať dopyt →</button>
+        </form>
       </div>
     </div>
   </section>
@@ -1196,9 +1269,22 @@
   </footer>
 
   <script>
+    const THEME_KEY = 'autoscelem-theme';
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      applyTheme(savedTheme);
+    }
+
     function toggleTheme() {
-      const h = document.documentElement;
-      h.setAttribute('data-theme', h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem(THEME_KEY, next);
     }
   </script>
 </body>
