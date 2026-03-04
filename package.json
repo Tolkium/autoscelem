@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "deploy": "node scripts/predeploy.js && gh-pages -d dist",
-    "deploy:tolkium": "node scripts/predeploy.js && node scripts/deploy-to-main.js"
+    "deploy": "node scripts/predeploy.js && gh-pages -d dist"
   },
   "devDependencies": {
     "gh-pages": "^6.2.0"
