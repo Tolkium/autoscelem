@@ -801,11 +801,34 @@
 
     @media(max-width:900px) {
       nav {
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 .75rem;
       }
 
       nav ul {
         display: none;
+      }
+
+      .logo {
+        border-right: none;
+        padding: 0 .5rem;
+        height: 60px;
+      }
+
+      .nav-actions {
+        border-left: none;
+        height: 60px;
+        padding: 0 .35rem;
+        gap: .4rem;
+      }
+
+      .nav-tel-sm {
+        font-size: .68rem;
+        white-space: nowrap;
+        letter-spacing: .2px;
+        margin-right: 10px;
       }
 
       .hero-grid-container {
@@ -840,11 +863,12 @@
       }
 
       h1 {
-        font-size: clamp(2.15rem, 11.5vw, 3.2rem);
+        font-size: clamp(2.05rem, 10.6vw, 2.95rem);
         line-height: .95;
-        letter-spacing: -1px;
+        letter-spacing: -.8px;
         margin-bottom: .75rem;
         text-align: center;
+        width: 100%;
       }
 
       h1 .thin {
@@ -931,7 +955,7 @@
       }
 
       h1 {
-        font-size: clamp(2rem, 10.5vw, 2.8rem);
+        font-size: clamp(1.9rem, 9.6vw, 2.55rem);
       }
 
       .hero-motto {
